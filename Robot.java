@@ -10,6 +10,9 @@ public class Robot {
 
 	private static RobotState currentState = RobotState.FORWARD;
 
+	private static long currentTime = 0;
+	private static long previousTime = 0;
+
 	public static boolean blackDetected() {
 		//LightSensor lineDetect = new LightSensor(SensorPort.S2);
 
@@ -76,6 +79,14 @@ public class Robot {
 		currentState = state;
 	}
 
+	public static void updateLastTime() {
+		previousTime = currentTime;
+	}
+
+	public static boolean timeExceeded(int amount) {
+		return (previousTime + amount) > currentTime;
+	}
+
 	public static void start(int interval, int startSpeed) throws InterruptedException {
 		boolean ended = false;
 		setSpeed(startSpeed);
@@ -101,6 +112,7 @@ public class Robot {
 			}
 			if( ended ) stop();
 			Thread.sleep(interval);
+			currentTime += interval;
 		}		
 	}
 
