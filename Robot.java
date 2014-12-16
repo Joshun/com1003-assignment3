@@ -1,5 +1,6 @@
 import icommand.nxt.*;
 import icommand.nxt.comm.NXTCommand;
+import java.util.Scanner;
 
 public class Robot {
 	private final static Motor MOTOR_LEFT = Motor.B;
@@ -23,24 +24,26 @@ public class Robot {
 		Sound.playTone(500, duration);
 	}
 
-	public static void goForward(){
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-	}
-
 	public static void goBackward(){
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
 	}
 
+	public static void goForward(){
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.forward();
+	}
+
 	public static void goLeft() {
 		MOTOR_LEFT.backward();
+		//~ MOTOR_LEFT.stop();
 		MOTOR_RIGHT.forward();
 	}
 
 	public static void goRight() {
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
+		//~ MOTOR_RIGHT.stop();
 	}
 
 	public static void stop() {
@@ -86,29 +89,39 @@ public class Robot {
 	public static boolean timeExceeded(int amount) {
 		return (previousTime + amount) > currentTime;
 	}
-
+	
 	public static void start(int interval, int startSpeed) throws InterruptedException {
 		boolean ended = false;
+		boolean reachedLine = false;
+		boolean leftTurn = false;
+		boolean turnedLast = false;
 		setSpeed(startSpeed);
 		goForward();
 		while( ! ended ) {
-			// ColourSensor lineDetect = new ColorSensor(SENSOR_PORT);
-			// statements to control the robot
-			//
-			//Motor.B.backward();
-			//Motor.B.setSpeed(900);
-			if( blackDetected() ) {
-				beep(interval);
-				System.out.println("Black detected.");
-				if( currentState == RobotState.FORWARD ) {
-					setState(RobotState.LEFT);
+			if ( blackDetected() ) {
+				// Go forward
+				reachedLine = true;
+				System.out.println("Going forward");
+				goForward();
+				
+				turnedLast = false;
+			}
+			else if (reachedLine){
+				// Stop
+				// Turn right
+				System.out.println("Going right");
+				
+				if( ! turnedLast ) {
+					turnedLast = true;
+					leftTurn = !leftTurn;
 				}
-				else if( currentState == RobotState.LEFT ) {
-					setState(RobotState.STOPPED);
+				
+				if( leftTurn ) {	
+					goLeft();
 				}
-
-				action();
-				// ended = true;
+				else {
+					goRight();
+				}			
 			}
 			if( ended ) stop();
 			Thread.sleep(interval);
@@ -118,12 +131,16 @@ public class Robot {
 
 	public static void main(String[] args)  throws InterruptedException {
 		final int INTERVAL = 60;
-
+		final int SPEED = 100;
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
 		lineDetect = new LightSensor(SENSOR_PORT);
 
+		stop();
+		Scanner keyboardInput = new Scanner(System.in);
+		keyboardInput.nextLine();
+		
 		System.out.println("Robot control started.");
-		start(INTERVAL, 50);
+		start(INTERVAL, SPEED);
 	}
 }
