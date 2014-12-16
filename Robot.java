@@ -6,8 +6,10 @@ public class Robot {
 	private final static Motor MOTOR_LEFT = Motor.B;
 	private final static Motor MOTOR_RIGHT = Motor.C;
 	private final static int LIGHT_THESHOLD = 550;
-	private final static SensorPort SENSOR_PORT = SensorPort.S2;
+	private final static SensorPort L_SENSOR_PORT = SensorPort.S2;
+	private final static SensorPort U_SENSOR_PORT = SensorPort.S4; 
 	private static LightSensor lineDetect;
+	private static UltrasonicSensor distanceDetect;
 
 	private static RobotState currentState = RobotState.FORWARD;
 
@@ -98,7 +100,15 @@ public class Robot {
 		setSpeed(startSpeed);
 		goForward();
 		while( ! ended ) {
+			System.out.println("distanceDetect.getDistance():" + distanceDetect.getDistance());
+			if ( distanceDetect.getDistance() < 15 ) {
+				goRight();
+				turnedLast = false;
+				beep(500);
+				Thread.sleep(300);
+			}
 			if ( blackDetected() ) {
+	
 				// Go forward
 				reachedLine = true;
 				System.out.println("Going forward");
@@ -109,17 +119,18 @@ public class Robot {
 			else if (reachedLine){
 				// Stop
 				// Turn right
-				System.out.println("Going right");
 				
 				if( ! turnedLast ) {
 					turnedLast = true;
 					leftTurn = !leftTurn;
 				}
 				
-				if( leftTurn ) {	
+				if( leftTurn ) {
+					System.out.println("Going left");
 					goLeft();
 				}
 				else {
+					System.out.println("Going right");	
 					goRight();
 				}			
 			}
@@ -130,11 +141,13 @@ public class Robot {
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
-		final int INTERVAL = 60;
+		final int INTERVAL = 1;
 		final int SPEED = 100;
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
-		lineDetect = new LightSensor(SENSOR_PORT);
+		lineDetect = new LightSensor(L_SENSOR_PORT);
+		distanceDetect = new UltrasonicSensor(U_SENSOR_PORT);
+		
 
 		stop();
 		Scanner keyboardInput = new Scanner(System.in);
