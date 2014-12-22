@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created by diasvg.py -->
-<svg width="48.504cm" height="49.828cm" viewBox="11.950 3.950 60.454 53.778"
+<svg width="48.504cm" height="56.520cm" viewBox="11.950 3.950 60.454 60.470"
  xmlns="http://www.w3.org/2000/svg"
  xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect x="12.000" y="4.000" width="14.000" height="2.450" fill="#FFFFFF" stroke="none" stroke-width="0"/>
@@ -14,13 +14,13 @@ while !ended</text>
 <line x1="19.000" y1="6.450" x2="18.999" y2="12.463" stroke="#000000" stroke-width="0.100" />
 <polygon fill="#000000" stroke="none" stroke-width="0.100" points="18.999,12.838 18.749,12.338 18.999,12.463 19.249,12.338 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="18.999,12.838 18.749,12.338 18.999,12.463 19.249,12.338 "/>
-<polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="30.350,12.300 33.949,15.597 30.350,18.894 26.750,15.597 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.350,12.300 33.949,15.597 30.350,18.894 26.750,15.597 "/>
+<polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="30.350,12.144 34.119,15.597 30.350,19.050 26.580,15.597 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.350,12.144 34.119,15.597 30.350,19.050 26.580,15.597 "/>
 <text x="30.350" y="15.792"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
-blackDetected</text>
-<line x1="22.549" y1="15.610" x2="26.263" y2="15.599" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="26.638,15.597 26.139,15.849 26.263,15.599 26.137,15.349 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="26.638,15.597 26.139,15.849 26.263,15.599 26.137,15.349 "/>
+blackDetected?</text>
+<line x1="22.549" y1="15.610" x2="26.093" y2="15.599" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="26.468,15.597 25.969,15.849 26.093,15.599 25.967,15.349 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="26.468,15.597 25.969,15.849 26.093,15.599 25.967,15.349 "/>
 <text x="23.716" y="15.357"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
 TRUE</text>
 <rect x="38.878" y="13.327" width="8.100" height="4.600" fill="#FFFFFF" stroke="none" stroke-width="0"/>
@@ -31,9 +31,9 @@ reachedLine = true</text>
 <rect x="38.839" y="20.610" width="8.100" height="4.898" fill="none" stroke="#000000" stroke-width="0.100" />
 <text x="42.889" y="23.254"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
 turnedLast = false</text>
-<line x1="33.949" y1="15.597" x2="38.391" y2="15.624" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="38.766,15.627 38.265,15.874 38.391,15.624 38.268,15.374 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="38.766,15.627 38.265,15.874 38.391,15.624 38.268,15.374 "/>
+<line x1="34.119" y1="15.597" x2="38.391" y2="15.624" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="38.766,15.627 38.265,15.873 38.391,15.624 38.268,15.373 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="38.766,15.627 38.265,15.873 38.391,15.624 38.268,15.373 "/>
 <line x1="42.928" y1="17.927" x2="42.896" y2="20.123" stroke="#000000" stroke-width="0.100" />
 <polygon fill="#000000" stroke="none" stroke-width="0.100" points="42.890,20.498 42.648,19.994 42.896,20.123 43.148,20.001 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="42.890,20.498 42.648,19.994 42.896,20.123 43.148,20.001 "/>
@@ -46,19 +46,19 @@ goForward</text>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="42.851,27.588 42.610,27.083 42.858,27.213 43.110,27.092 "/>
 <text x="35.375" y="15.427"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
 TRUE</text>
-<line x1="30.350" y1="18.894" x2="30.331" y2="33.919" stroke="#000000" stroke-width="0.100" />
+<line x1="30.350" y1="19.050" x2="30.331" y2="33.919" stroke="#000000" stroke-width="0.100" />
 <polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.330,34.294 30.081,33.793 30.331,33.919 30.581,33.794 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.330,34.294 30.081,33.793 30.331,33.919 30.581,33.794 "/>
-<text x="30.494" y="20.010"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+<text x="30.494" y="20.009"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
 FALSE</text>
 <polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="30.330,34.406 34.078,37.583 30.330,40.760 26.583,37.583 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.330,34.406 34.078,37.583 30.330,40.760 26.583,37.583 "/>
 <text x="30.330" y="37.778"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
-reachedLine</text>
+reachedLine?</text>
 <polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="43.104,34.208 46.852,37.573 43.104,40.938 39.357,37.573 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="43.104,34.208 46.852,37.573 43.104,40.938 39.357,37.573 "/>
 <text x="43.104" y="37.768"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
-!turnedLast</text>
+!turnedLast?</text>
 <rect x="50.094" y="34.458" width="10.115" height="6.286" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <rect x="50.094" y="34.458" width="10.115" height="6.286" fill="none" stroke="#000000" stroke-width="0.100" />
 <text x="55.151" y="37.396"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
@@ -74,10 +74,10 @@ leftTurn = !leftTurn</text>
 <polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="43.072,41.665 46.981,44.479 43.072,47.293 39.162,44.479 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="43.072,41.665 46.981,44.479 43.072,47.293 39.162,44.479 "/>
 <text x="43.072" y="44.674"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
-leftTurn</text>
-<line x1="36.647" y1="44.459" x2="38.675" y2="44.475" stroke="#000000" stroke-width="0.100" />
-<polygon fill="#000000" stroke="none" stroke-width="0.100" points="39.050,44.478 38.549,44.724 38.675,44.475 38.552,44.224 "/>
-<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="39.050,44.478 38.549,44.724 38.675,44.475 38.552,44.224 "/>
+leftTurn?</text>
+<line x1="36.647" y1="44.459" x2="38.676" y2="44.475" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="39.051,44.478 38.549,44.724 38.676,44.475 38.552,44.224 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="39.051,44.478 38.549,44.724 38.676,44.475 38.552,44.224 "/>
 <rect x="50.094" y="42.385" width="10.310" height="4.211" fill="#FFFFFF" stroke="none" stroke-width="0"/>
 <rect x="50.094" y="42.385" width="10.310" height="4.211" fill="none" stroke="#000000" stroke-width="0.100" />
 <text x="55.249" y="44.685"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
@@ -93,4 +93,28 @@ goRight</text>
 <polygon fill="#000000" stroke="none" stroke-width="0.100" points="43.059,48.952 42.813,48.450 43.062,48.577 43.313,48.454 "/>
 <polygon fill="none" stroke="#000000" stroke-width="0.100"  points="43.059,48.952 42.813,48.450 43.062,48.577 43.313,48.454 "/>
 <line x1="36.677" y1="44.440" x2="36.717" y2="37.578" stroke="#000000" stroke-width="0.100" />
+<text x="34.320" y="37.453"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+TRUE</text>
+<polygon fill="#FFFFFF" stroke="none" stroke-width="0.100" points="22.666,54.028 26.591,57.224 22.666,60.420 18.742,57.224 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="22.666,54.028 26.591,57.224 22.666,60.420 18.742,57.224 "/>
+<text x="22.666" y="57.419"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+ended?</text>
+<rect x="31.039" y="55.366" width="6.147" height="3.627" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<rect x="31.039" y="55.366" width="6.147" height="3.627" fill="none" stroke="#000000" stroke-width="0.100" />
+<text x="34.112" y="57.374"  fill="#000000" text-anchor="middle" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+stop movement</text>
+<line x1="26.591" y1="57.224" x2="30.552" y2="57.184" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="30.927,57.180 30.429,57.435 30.552,57.184 30.424,56.935 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="30.927,57.180 30.429,57.435 30.552,57.184 30.424,56.935 "/>
+<line x1="22.785" y1="15.661" x2="22.668" y2="53.541" stroke="#000000" stroke-width="0.100" />
+<polygon fill="#000000" stroke="none" stroke-width="0.100" points="22.667,53.916 22.418,53.415 22.668,53.541 22.918,53.417 "/>
+<polygon fill="none" stroke="#000000" stroke-width="0.100"  points="22.667,53.916 22.418,53.415 22.668,53.541 22.918,53.417 "/>
+<text x="47.419" y="37.273"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+TRUE</text>
+<text x="47.319" y="44.148"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+TRUE</text>
+<text x="43.369" y="48.098"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+FALSE</text>
+<text x="27.019" y="56.961"  fill="#000000" text-anchor="start" font-size="0.80" font-family="sans" font-style="normal" font-weight="400">
+TRUE</text>
 </svg>
