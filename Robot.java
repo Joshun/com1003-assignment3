@@ -120,6 +120,9 @@ public class Robot {
 				// Stop
 				// Turn right
 				
+				// Only change direction of turning if last movement was not a turn (i.e. going forward)
+				// This prevents constantly turning backwards and forwards while black hasn't been detected
+				// (keep same direction until black is next detected)
 				if( ! turnedLast ) {
 					turnedLast = true;
 					leftTurn = !leftTurn;
