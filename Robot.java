@@ -11,9 +11,17 @@ public class Robot {
 	private final static Motor MOTOR_LEFT = Motor.B;
 	private final static Motor MOTOR_RIGHT = Motor.C;
 	private final static int LIGHT_THESHOLD = 550;
+	
+	// New SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT = SensorPort.S2;
-	private final static SensorPort U_SENSOR_PORT = SensorPort.S4; 
+	
+	// New SensorPort for Ultrasonic Sensor
+	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
+	
+	// Lightsensor object
 	private static LightSensor lineDetect;
+	
+	// Ultrasonic disance sensor object
 	private static UltrasonicSensor distanceDetect;
 
 	private static RobotState currentState = RobotState.FORWARD;
@@ -22,8 +30,6 @@ public class Robot {
 	private static long previousTime = 0;
 
 	public static boolean blackDetected() {
-		//LightSensor lineDetect = new LightSensor(SensorPort.S2);
-
 		return lineDetect.getLightValue() < LIGHT_THESHOLD;
 	}
 
