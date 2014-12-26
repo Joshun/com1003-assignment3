@@ -1,3 +1,8 @@
+/**
+ * @author Jack Deadman
+ * @author Joshua O'Leary
+ */
+
 import icommand.nxt.*;
 import icommand.nxt.comm.NXTCommand;
 import java.util.Scanner;
@@ -53,6 +58,9 @@ public class Robot {
 		MOTOR_RIGHT.stop();
 	}
 
+	/**
+	 * @param speed Speed value (0-900)
+	 */
 	public static void setSpeed(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
