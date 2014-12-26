@@ -29,6 +29,10 @@ public class Robot {
 	private static long currentTime = 0;
 	private static long previousTime = 0;
 
+	/**
+	 * Accessor - returns light detection status within a threshold value
+	 * @return boolean returns true if black is detected and false otherwise
+	 */
 	public static boolean blackDetected() {
 		return lineDetect.getLightValue() < LIGHT_THESHOLD;
 	}
@@ -65,6 +69,7 @@ public class Robot {
 	}
 
 	/**
+	 * Mutator - sets the speed of both motors
 	 * @param speed int speed value (0-900)
 	 */
 	public static void setSpeed(int speed) {
