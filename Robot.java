@@ -37,6 +37,10 @@ public class Robot {
 		return lineDetect.getLightValue() < LIGHT_THESHOLD;
 	}
 
+	/**
+	 * Used to make beep sound for a given duration
+	 * @param duration int length of tone
+	 */
 	public static void beep(int duration) {
 		Sound.playTone(500, duration);
 	}
