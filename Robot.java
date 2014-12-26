@@ -59,7 +59,7 @@ public class Robot {
 	}
 
 	/**
-	 * @param speed Speed value (0-900)
+	 * @param speed int speed value (0-900)
 	 */
 	public static void setSpeed(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
