@@ -67,6 +67,10 @@ public class Robot {
 		//~ MOTOR_RIGHT.stop();
 	}
 
+
+	/**
+	 * Mutator - tell both motors to stop spinning
+	 */
 	public static void stop() {
 		MOTOR_LEFT.stop();
 		MOTOR_RIGHT.stop();
