@@ -131,6 +131,11 @@ public class Robot {
 		return (previousTime + amount) > currentTime;
 	}
 	
+	/**
+	 * Start method - starts the robot's main loop
+	 * @param interval int interval by which the main loop sleeps at the end of each iteration
+	 * @param startSpeed int the initial speed the robot is placed in
+	 */
 	public static void start(int interval, int startSpeed) throws InterruptedException {
 		boolean ended = false;
 		boolean reachedLine = false;
