@@ -55,12 +55,18 @@ public class Robot {
 		MOTOR_RIGHT.forward();
 	}
 
+	/**
+	 * Mutator - tell robot to turn left
+	 */
 	public static void goLeft() {
 		MOTOR_LEFT.backward();
 		//~ MOTOR_LEFT.stop();
 		MOTOR_RIGHT.forward();
 	}
 
+	/**
+	 * Mutator - tell robot to turn right
+	 */
 	public static void goRight() {
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
