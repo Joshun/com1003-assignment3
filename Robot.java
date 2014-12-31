@@ -45,11 +45,17 @@ public class Robot {
 		Sound.playTone(500, duration);
 	}
 
+	/**
+	 * Mutator - tell robot to move backward by telling both motors to spin backwards
+	 */
 	public static void goBackward(){
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
 	}
 
+	/**
+	 * Mutator - tell robot to move forward by telling both motors to spin forwards
+	 */
 	public static void goForward(){
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
