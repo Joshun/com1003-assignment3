@@ -2,6 +2,7 @@
 
 \usepackage{enumitem}
 \usepackage[at]{easylist}
+\usepackage[]{algorithm2e}
 
 \title{COM1003 Assignment 3}
 \author{Jack Deadman and Joshua O'Leary}
@@ -18,7 +19,7 @@
 
 @@ blackDetected?
 @@@ reachedLine = true
-@@@ turnedLast = fale
+@@@ turnedLast = false
 @@@ goForward
 @@ else
 @@@ reachedLine?
@@ -36,6 +37,43 @@
 
 \end{easylist}
 
+\pagebreak
 
+\begin{algorithm}[H]
+ initialise Robot\;
+ direction := left\;
+ \While{Robot still active}{
+  \eIf{Detect black line}{
+   Robot moves forward\;
+   
+   }{
+   Robot stops moving\;
+   // Problem is this is getting called every frame, so it will
+   
+   // switch between the two states really quickly
+   
+   // ideally we want it to just happen once
+   
+   // atm we are using flags to solve the problem
+   
+   // bellow I try to explain the problem, im not 
+   
+   // 100\% sure about the best solution
+   
+   \eIf{direction equals left}{
+	   direction := right\;
+   }{
+	direction := left\;   
+   }
+   Turn in direction\;
+   
+  }
+ }
+ \caption{How to write algorithms}
+\end{algorithm}
+
+\paragraph{
+Okay I think we need to be more clever about this. I think we need to create some layers. One layer to handle the frames. Because at the moment we have to create code to have flags so they only fire once when the state changes. So maybe have like a layer which just has two methods, updateState and performActionOnState. Because atm we have stuff they are handling both updating variables and the robot movement. E.g. the move robot method shouldnt really be called every frame like it is, it should only be called when it changes. If that makes sense :/
+}
 
 \end{document}
