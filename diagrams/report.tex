@@ -1,0 +1,41 @@
+\documentclass[a4paper]{report}
+
+\usepackage{enumitem}
+\usepackage[at]{easylist}
+
+\title{COM1003 Assignment 3}
+\author{Jack Deadman and Joshua O'Leary}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Algorithm}
+\begin{easylist}
+@ Initialise I/O
+
+@ While !ended:
+
+@@ blackDetected?
+@@@ reachedLine = true
+@@@ turnedLast = fale
+@@@ goForward
+@@ else
+@@@ reachedLine?
+@@@@ !turnedLast?
+@@@@@ turnedLast = true
+@@@@@ leftTurn = !leftTurn
+@@@@ leftTurn?
+@@@@@ goLeft
+@@@@ else
+@@@@@ goRight
+
+@@ ended?
+@@@ stop movement
+
+
+\end{easylist}
+
+
+
+\end{document}
