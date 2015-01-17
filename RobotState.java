@@ -11,6 +11,10 @@ public class RobotState {
 	
 	public RobotState() { }
 	
+	public boolean compareMovement(RobotState state) {
+		return RobotState.compareMovement(this, state);
+	}
+	
 	public boolean detectedBlack() {
 		return blackDetected;
 	}
@@ -56,7 +60,8 @@ public class RobotState {
 		RobotState testState2 = new RobotState();
 		testState2.setBackward();
 		
-		System.out.println(RobotState.compareMovement(testState, testState2));		
+		System.out.println(RobotState.compareMovement(testState, testState2));
+		System.out.println(testState.compareMovement(testState2));	
 		
 	}
 	
