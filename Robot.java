@@ -97,7 +97,39 @@ public class Robot {
 		MOTOR_RIGHT.setSpeed(speed);
 	}
 
-	
+	public static void action() {
+		switch( currentState ) {
+			case FORWARD:
+				goForward();
+				break;
+			case BACKWARD:
+				goBackward();
+				break;
+			case LEFT:
+				goLeft();
+				break;
+			case RIGHT:
+				goRight();
+				break;
+			case STOPPED:
+				stop();
+				break;
+			default:
+				stop();
+		}
+	}
+
+	public static void setState(RobotState state) {
+		currentState = state;
+	}
+
+	public static void updateLastTime() {
+		previousTime = currentTime;
+	}
+
+	public static boolean timeExceeded(int amount) {
+		return (previousTime + amount) > currentTime;
+	}
 	
 	/**
 	 * Start method - starts the robot's main loop
