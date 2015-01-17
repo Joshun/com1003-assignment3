@@ -3,6 +3,11 @@ public class RobotState {
 	private boolean reachedLine = false;
 	
 	private RobotMovement movementState = RobotMovement.STOPPED;
+
+
+	public static boolean compareMovement(RobotState s1, RobotState s2) {
+		return s1.getMovement() == s2.getMovement();
+	}
 	
 	public RobotState() { }
 	
@@ -38,9 +43,21 @@ public class RobotState {
 		this.blackDetected = blackDetected;
 	}
 	
+	public RobotMovement getMovement() {
+		return movementState;
+	}
+
 	public static void main(String[] args) {
 		RobotState testState = new RobotState();
 		System.out.println(testState.detectedBlack());
+		
+		testState.setBackward();
+		
+		RobotState testState2 = new RobotState();
+		testState2.setBackward();
+		
+		System.out.println(RobotState.compareMovement(testState, testState2));		
+		
 	}
 	
 }
