@@ -1,9 +1,10 @@
 public class RobotState {
 	private boolean blackDetected = false;
+	private boolean obstacleDetected = false;
 	private boolean reachedLine = false;
 	
 	private RobotMovement movementState = RobotMovement.STOPPED;
-	private RobotMovement lastTurnDirection = RobotMovement.LEFT;
+	private RobotMovement nextTurnDirection = RobotMovement.LEFT;
 
 
 	public static boolean compareMovement(RobotState s1, RobotState s2) {
@@ -12,15 +13,15 @@ public class RobotState {
 	
 	public RobotState() { }
 	
-	private RobotState(boolean blackDetected, boolean reachedLine, RobotMovement movementState, RobotMovement lastTurnDirection) {
+	private RobotState(boolean blackDetected, boolean reachedLine, RobotMovement movementState, RobotMovement nextTurnDirection) {
 		this.blackDetected = blackDetected;
 		this.reachedLine = reachedLine;
 		this.movementState = movementState;
-		this.lastTurnDirection = lastTurnDirection;
+		this.nextTurnDirection = nextTurnDirection;
 	}
 	
 	public RobotState copy() {
-		return new RobotState(blackDetected, reachedLine, movementState, lastTurnDirection);
+		return new RobotState(blackDetected, reachedLine, movementState, nextTurnDirection);
 	}
 	
 	public boolean compareMovement(RobotState state) {
@@ -59,11 +60,22 @@ public class RobotState {
 		this.blackDetected = blackDetected;
 	}
 	
+	public void setDetectedObstacle(boolean obstacleDetected) {
+		this.obstacleDetected = obstacleDetected;
+	}
+	
 	public RobotMovement getMovement() {
 		return movementState;
 	}
 	
-	
+	public void swapTurnDirection() {
+		if (nextTurnDirection == RobotMovement.LEFT) {
+			nextTurnDirection = RobotMovement.RIGHT;
+		}
+		else {
+			nextTurnDirection = RobotMovement.LEFT;
+		}
+	}
 
 	public static void main(String[] args) {
 		RobotState testState = new RobotState();
