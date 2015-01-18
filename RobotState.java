@@ -3,6 +3,7 @@ public class RobotState {
 	private boolean reachedLine = false;
 	
 	private RobotMovement movementState = RobotMovement.STOPPED;
+	private RobotMovement lastTurnDirection = RobotMovement.LEFT;
 
 
 	public static boolean compareMovement(RobotState s1, RobotState s2) {
@@ -10,6 +11,17 @@ public class RobotState {
 	}
 	
 	public RobotState() { }
+	
+	private RobotState(boolean blackDetected, boolean reachedLine, RobotMovement movementState, RobotMovement lastTurnDirection) {
+		this.blackDetected = blackDetected;
+		this.reachedLine = reachedLine;
+		this.movementState = movementState;
+		this.lastTurnDirection = lastTurnDirection;
+	}
+	
+	public RobotState copy() {
+		return new RobotState(blackDetected, reachedLine, movementState, lastTurnDirection);
+	}
 	
 	public boolean compareMovement(RobotState state) {
 		return RobotState.compareMovement(this, state);
@@ -50,6 +62,8 @@ public class RobotState {
 	public RobotMovement getMovement() {
 		return movementState;
 	}
+	
+	
 
 	public static void main(String[] args) {
 		RobotState testState = new RobotState();
@@ -61,7 +75,10 @@ public class RobotState {
 		testState2.setBackward();
 		
 		System.out.println(RobotState.compareMovement(testState, testState2));
-		System.out.println(testState.compareMovement(testState2));	
+		System.out.println(testState.compareMovement(testState2));
+		
+		RobotState testState3 = testState2.copy();
+		System.out.println(testState3.compareMovement(testState2));
 		
 	}
 	
