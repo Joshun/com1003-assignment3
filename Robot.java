@@ -125,14 +125,22 @@ public class Robot {
 		currentState = state;
 	}
 
-	public static void updateLastTime() {
-		previousTime = currentTime;
+
+	public static void processMovement() {
+		leftSensorDetect = blackDetected(lineDetect1);
+		rightSensorDetect = blackDetected(lineDetect2);
+
+		if( leftSensorDetect && ! rightSensorDetect) {
+			goRight();
+		}
+		if( !leftSensorDetect && rightSensorDetect ) {
+			goLeft();
+		}
+		if( leftSensorDetect && rightSensorDetect ) {
+			goForward();
+		}
 	}
 
-	public static boolean timeExceeded(int amount) {
-		return (previousTime + amount) > currentTime;
-	}
-	
 	/**
 	 * Start method - starts the robot's main loop
 	 * @param interval int interval by which the main loop sleeps at the end of each iteration
@@ -153,7 +161,7 @@ public class Robot {
 				beep(500);
 				Thread.sleep(300);
 			}
-			if ( blackDetected() ) {
+			if ( blackDetected(lineDetect1) && blackDetected(lineDetect2) ) {
 	
 				// Go forward
 				reachedLine = true;
