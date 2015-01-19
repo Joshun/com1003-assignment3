@@ -5,61 +5,67 @@ public class Robot {
 	private static final int INTERVAL = 50;
 
 	public static void untilLine() throws InterruptedException {
-		while(!blackDetected()) {
+		RobotControl.goForward();
+		while(!RobotControl.blackDetectedEither()) {
 			Thread.sleep(INTERVAL);
 		}
+		System.out.println("Reached line.");
 		// Stops
 		// Waits for a few secs
 		// Turns right
-			currentState.setRight();
+			RobotControl.stop();
+			Thread.sleep(2000);
+
+			RobotControl.setSpeed(100);
+			RobotControl.goRight();
+
+			boolean offLine = false;
+
+			while(!RobotControl.blackDetectedEither() || !offLine) {
+				if( ! offLine && ! RobotControl.blackDetectedEither() ) {
+					offLine = true;
+				}
+				Thread.sleep(INTERVAL);
+			}
+			RobotControl.stop();
 	}
 	
 	public static void updateState() {
 		previousState = currentState.copy();
 		
-		boolean onLine = blackDetected();
+		boolean onLine = RobotControl.blackDetectedBoth();
 		System.out.println("onLine? " + onLine);
 		
-		// Called once line has been reached, only once
-		if(!reachedLine && onLine) {
-			reachedLine = true;
-			currentState.setRight();
-		}
-
 	// Update current state based on environment
 		currentState.setDetectedBlack(onLine);
-		currentState.setDetectedObstacle(obstacleDetected());
-	//	obstacleDetected()
+		
+
+		currentState.setDetectedObstacle(RobotControl.obstacleDetected());
 
 	}
 	
-	public static boolean blackDetected() {
-		return Math.random() > 0.5;
-	}
+	// public static boolean blackDetected() {
+	// 	return Math.random() > 0.5;
+	// }
 	
-	public static boolean obstacleDetected() {
-		return Math.random() > 0.8;
-	}
+	// public static boolean obstacleDetected() {
+	// 	return Math.random() > 0.8;
+	// }	
 	
-	public static void goLeft() {
-		// Go left
-			System.out.println("Going left...");
-	}
-	
-	public static void goRight() {
-		// Go right
-			System.out.println("Going right...");		
-	}
+	public static void processMovement() {
+		leftSensorDetect = blackDetected(lineDetect1);
+		rightSensorDetect = blackDetected(lineDetect2);
 
-	public static void goForward() {
-		// Go forward
-			System.out.println("Going forward...");
+		if( leftSensorDetect && ! rightSensorDetect) {
+			goRight();
+		}
+		if( !leftSensorDetect && rightSensorDetect ) {
+			goLeft();
+		}
+		if( leftSensorDetect && rightSensorDetect ) {
+			goForward();
+		}
 	}
-	
-	public static void goBackward() {
-		// Go backward
-			System.out.println("Going backward...");
-	}	
 	
 	public static void loop() throws InterruptedException {
 		while(true) {
@@ -68,18 +74,19 @@ public class Robot {
 			if (!RobotState.compareMovement(previousState, currentState)) {
 				RobotMovement direction = currentState.getMovement();
 				
+				System.out.println(direction);
 				switch(direction) {
 					case LEFT:
-						goLeft();
+						RobotControl.goLeft();
 						break;
 					case RIGHT:
-						goRight();
+						RobotControl.goRight();
 						break;
 					case FORWARD:
-						goForward();
+						RobotControl.goForward();
 						break;
 					case BACKWARD:
-						goBackward();
+						RobotControl.goBackward();
 						break;
 				}
 				if (direction == RobotMovement.LEFT || direction == RobotMovement.RIGHT) {
@@ -91,6 +98,8 @@ public class Robot {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+		RobotControl.initialise();
+		RobotControl.setSpeed(150);
 		untilLine();
 		loop();
 	}
