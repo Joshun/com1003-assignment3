@@ -13,13 +13,15 @@ public class Robot {
 	private final static int LIGHT_THESHOLD = 550;
 	
 	// New SensorPort for Light Sensor
-	private final static SensorPort L_SENSOR_PORT = SensorPort.S2;
+	private final static SensorPort L_SENSOR_PORT_1 = SensorPort.S1;
+	private final static SensorPort L_SENSOR_PORT_2 = SensorPort.S2;
 	
 	// New SensorPort for Ultrasonic Sensor
 	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
 	
 	// Lightsensor object
-	private static LightSensor lineDetect;
+	private static LightSensor lineDetect1;
+	private static LightSensor lineDetect2;
 	
 	// Ultrasonic disance sensor object
 	private static UltrasonicSensor distanceDetect;
@@ -33,8 +35,8 @@ public class Robot {
 	 * Accessor - returns light detection status within a threshold value
 	 * @return boolean returns true if black is detected and false otherwise
 	 */
-	public static boolean blackDetected() {
-		return lineDetect.getLightValue() < LIGHT_THESHOLD;
+	public static boolean blackDetected(LightSensor lsensor) {
+		return lsensor.getLightValue() < LIGHT_THESHOLD;
 	}
 
 	/**
@@ -192,7 +194,8 @@ public class Robot {
 		final int SPEED = 100;
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
-		lineDetect = new LightSensor(L_SENSOR_PORT);
+		lineDetect1 = new LightSensor(L_SENSOR_PORT_1);
+		lineDetect2 = new LightSensor(L_SENSOR_PORT_2);
 		distanceDetect = new UltrasonicSensor(U_SENSOR_PORT);
 		
 
