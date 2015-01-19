@@ -10,13 +10,13 @@ public class Robot {
 			Thread.sleep(INTERVAL);
 		}
 		System.out.println("Reached line.");
+		RobotControl.beep(500);
 		// Stops
 		// Waits for a few secs
 		// Turns right
 			RobotControl.stop();
 			Thread.sleep(2000);
 
-			RobotControl.setSpeed(100);
 			RobotControl.goRight();
 
 			boolean offLine = false;
@@ -27,14 +27,15 @@ public class Robot {
 				}
 				Thread.sleep(INTERVAL);
 			}
+			System.out.println("Lined up.");
+			RobotControl.beep(500);
 			RobotControl.stop();
 	}
 	
 	public static void updateState() {
 		previousState = currentState.copy();
-		
+
 		boolean onLine = RobotControl.blackDetectedBoth();
-		System.out.println("onLine? " + onLine);
 		
 	// Update current state based on environment
 		currentState.setDetectedBlack(onLine);
@@ -53,55 +54,71 @@ public class Robot {
 	// }	
 	
 	public static void processMovement() {
-		leftSensorDetect = blackDetected(lineDetect1);
-		rightSensorDetect = blackDetected(lineDetect2);
+		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
+		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
 		if( leftSensorDetect && ! rightSensorDetect) {
-			goRight();
+			RobotControl.goRight();
 		}
 		if( !leftSensorDetect && rightSensorDetect ) {
-			goLeft();
+			RobotControl.goLeft();
 		}
 		if( leftSensorDetect && rightSensorDetect ) {
-			goForward();
+			RobotControl.goForward();
+		}
+		if( ! leftSensorDetect && ! rightSensorDetect ) {
+			RobotControl.goLeft();
 		}
 	}
-	
+
 	public static void loop() throws InterruptedException {
 		while(true) {
 			updateState();
-			System.out.println("State changed? " + !RobotState.compareMovement(previousState, currentState));
-			if (!RobotState.compareMovement(previousState, currentState)) {
-				RobotMovement direction = currentState.getMovement();
+			processMovement();
+			// System.out.println("State changed? " + !RobotState.compareMovement(previousState, currentState));
+			// if (!RobotState.compareMovement(previousState, currentState)) {
+			// 	RobotMovement direction = currentState.getMovement();
 				
-				System.out.println(direction);
-				switch(direction) {
-					case LEFT:
-						RobotControl.goLeft();
-						break;
-					case RIGHT:
-						RobotControl.goRight();
-						break;
-					case FORWARD:
-						RobotControl.goForward();
-						break;
-					case BACKWARD:
-						RobotControl.goBackward();
-						break;
-				}
-				if (direction == RobotMovement.LEFT || direction == RobotMovement.RIGHT) {
-					currentState.swapTurnDirection();
-				}
-			}
+			// 	System.out.println(direction);
+			// 	switch(direction) {
+			// 		case LEFT:
+			// 			RobotControl.goLeft();
+			// 			break;
+			// 		case RIGHT:
+			// 			RobotControl.goRight();
+			// 			break;
+			// 		case FORWARD:
+			// 			RobotControl.goForward();
+			// 			break;
+			// 		case BACKWARD:
+			// 			RobotControl.goBackward();
+			// 			break;
+			// 	}
+			// 	// if (direction == RobotMovement.LEFT || direction == RobotMovement.RIGHT) {
+			// 	// 	currentState.swapTurnDirection();
+			// 	// }
+
+			// }
 			Thread.sleep(INTERVAL);
 		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
 		RobotControl.initialise();
-		RobotControl.setSpeed(150);
+		RobotControl.stop();
+		Thread.sleep(1000);
+		RobotControl.setBaseSpeed(150);
 		untilLine();
 		loop();
+
+
+		// RobotControl.goForward();
+		// Thread.sleep(4000);
+		// RobotControl.goRight();
+		// Thread.sleep(4000);
+		// RobotControl.goLeft();
+		// Thread.sleep(4000);
+		// RobotControl.stop();
 	}
 }
 

@@ -26,6 +26,11 @@ public class RobotControl {
 	// Ultrasonic disance sensor object
 	private static UltrasonicSensor distanceDetect;
 
+	// "Base" speed
+	private static int baseSpeed = 100;
+	private static int speedFactor = 2;
+
+
 	/**
 	 * Accessor - returns light detection status within a threshold value
 	 * @return boolean returns true if black is detected and false otherwise
@@ -68,6 +73,8 @@ public class RobotControl {
 	 * Mutator - tell robot to move backward by telling both motors to spin backwards
 	 */
 	public static void goBackward(){
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed);		
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
 	}
@@ -76,6 +83,8 @@ public class RobotControl {
 	 * Mutator - tell robot to move forward by telling both motors to spin forwards
 	 */
 	public static void goForward(){
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 	}
@@ -84,8 +93,9 @@ public class RobotControl {
 	 * Mutator - tell robot to turn left
 	 */
 	public static void goLeft() {
-		MOTOR_LEFT.backward();
-		//~ MOTOR_LEFT.stop();
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 	}
 
@@ -93,8 +103,10 @@ public class RobotControl {
 	 * Mutator - tell robot to turn right
 	 */
 	public static void goRight() {
+		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.stop();
+		MOTOR_RIGHT.forward();
 		// MOTOR_RIGHT.backward();
 		//~ MOTOR_RIGHT.stop();
 	}
@@ -112,13 +124,17 @@ public class RobotControl {
 	 * Mutator - sets the speed of both motors
 	 * @param speed int speed value (0-900)
 	 */
-	public static void setSpeed(int speed) {
-		MOTOR_LEFT.setSpeed(speed);
-		MOTOR_RIGHT.setSpeed(speed);
+
+	public static void setBaseSpeed(int speed) {
+		baseSpeed = speed;
 	}
 
+	// private static void setSpeed(int speed) {
+	// 	MOTOR_LEFT.setSpeed(speed);
+	// 	MOTOR_RIGHT.setSpeed(speed);
+	// }
+
 	public static void initialise() {
-		final int SPEED = 100;
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
