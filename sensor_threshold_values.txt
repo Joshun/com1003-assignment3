@@ -1,0 +1,12 @@
+Black Line
+==========
+
+left: 480
+right: 440
+
+Circle
+======
+
+left: 410
+right: 360
+

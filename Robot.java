@@ -10,7 +10,6 @@ public class Robot {
 			Thread.sleep(INTERVAL);
 		}
 		System.out.println("Reached line.");
-		RobotControl.beep(500);
 		// Stops
 		// Waits for a few secs
 		// Turns right
@@ -28,7 +27,6 @@ public class Robot {
 				Thread.sleep(INTERVAL);
 			}
 			System.out.println("Lined up.");
-			RobotControl.beep(500);
 			RobotControl.stop();
 	}
 	
@@ -42,7 +40,6 @@ public class Robot {
 		
 
 		currentState.setDetectedObstacle(RobotControl.obstacleDetected());
-
 	}
 	
 	// public static boolean blackDetected() {
@@ -99,7 +96,7 @@ public class Robot {
 			// 	// }
 
 			// }
-			Thread.sleep(INTERVAL);
+			Thread.sleep(0);
 		}
 	}
 	
@@ -108,9 +105,11 @@ public class Robot {
 		RobotControl.stop();
 		Thread.sleep(1000);
 		RobotControl.setBaseSpeed(150);
+
 		untilLine();
 		loop();
 
+		// RobotControl.debug();
 
 		// RobotControl.goForward();
 		// Thread.sleep(4000);

@@ -10,7 +10,11 @@ import java.util.Scanner;
 public class RobotControl {
 	private final static Motor MOTOR_LEFT = Motor.B;
 	private final static Motor MOTOR_RIGHT = Motor.C;
-	private final static int LIGHT_THESHOLD = 550;
+
+	// Light threshold values for both sensors
+	private final static int LEFT_LIGHT_THRESHOLD = 500;
+	private final static int RIGHT_LIGHT_THESHOLD = 460;
+
 	
 	// New SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S1;
@@ -28,33 +32,33 @@ public class RobotControl {
 
 	// "Base" speed
 	private static int baseSpeed = 100;
-	private static int speedFactor = 2;
+	private static int speedFactor = 4;
 
 
 	/**
 	 * Accessor - returns light detection status within a threshold value
 	 * @return boolean returns true if black is detected and false otherwise
 	 */
-	public static boolean blackDetected(LightSensor lsensor) {
-		return lsensor.getLightValue() < LIGHT_THESHOLD;
+	public static boolean blackDetected(LightSensor lsensor, int threshold) {
+		return lsensor.getLightValue() < threshold;
 	}
 
 	public static boolean blackDetectedLeft() {
-		return blackDetected(lightSensorLeft);
+		System.out.println("Left sensor: " + lightSensorLeft.getLightValue() + " " + (lightSensorLeft.getLightValue() < LEFT_LIGHT_THRESHOLD));
+		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
 	}
 
 	public static boolean blackDetectedRight() {
-		return blackDetected(lightSensorRight);
+		System.out.println("Right sensor: " + lightSensorRight.getLightValue() + " " + (lightSensorRight.getLightValue() < RIGHT_LIGHT_THESHOLD));
+		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
 	public static boolean blackDetectedEither() {
-		return blackDetected(lightSensorLeft) || blackDetected(lightSensorRight);
+		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) || blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
 	public static boolean blackDetectedBoth() {
-		System.out.println("Left: " + blackDetected(lightSensorLeft) + " Right: " + blackDetected(lightSensorRight));
-		System.out.println("Both: " + (blackDetected(lightSensorLeft) && blackDetected(lightSensorRight)));
-		return blackDetected(lightSensorLeft) && blackDetected(lightSensorRight);
+		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) && blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
 	public static boolean obstacleDetected() {
@@ -142,6 +146,16 @@ public class RobotControl {
 		distanceDetect = new UltrasonicSensor(U_SENSOR_PORT);
 	}		
 
+	public static void debug() throws InterruptedException {
+		while( true ) {
+			int lSensorValue = lightSensorLeft.getLightValue();
+			int rSensorValue = lightSensorRight.getLightValue();
+
+			System.out.println("Left: " + lSensorValue + " Right: " + rSensorValue);
+
+			Thread.sleep(50);
+		}
+	}
 
 	public static void main(String[] args)  throws InterruptedException {
 		RobotControl.initialise();
