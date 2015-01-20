@@ -73,7 +73,6 @@ public class Robot {
 	public static void loop() throws InterruptedException {
 		while(true) {
 			if( RobotControl.obstacleDetected() ) {
-				boolean onLine = false;
 				RobotControl.goHardLeft();
 				turnUntilLine();			
 			}
