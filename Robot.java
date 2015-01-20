@@ -20,7 +20,14 @@ public class Robot {
 
 			RobotControl.goRight(4);
 
-			boolean offLine = false;
+			turnUntilLine();
+
+			System.out.println("Lined up.");
+			RobotControl.stop();
+	}
+
+	public static void turnUntilLine() throws InterruptedException {
+		boolean offLine = false;
 
 			while(!RobotControl.blackDetectedEither() || !offLine) {
 				if( ! offLine && ! RobotControl.blackDetectedEither() ) {
@@ -28,8 +35,6 @@ public class Robot {
 				}
 				Thread.sleep(INTERVAL);
 			}
-			System.out.println("Lined up.");
-			RobotControl.stop();
 	}
 	
 	public static void updateState() {
@@ -52,7 +57,7 @@ public class Robot {
 	// 	return Math.random() > 0.8;
 	// }	
 	
-	public static void processMovement() {
+	public static void processMovement() throws InterruptedException {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
@@ -68,8 +73,15 @@ public class Robot {
 
 		// On spot (only if black detected from both left and right sensors, and no object is detected)
 		if( leftSensorDetect && rightSensorDetect && !RobotControl.nearObject()) {
+			RobotControl.goForward();
+			Thread.sleep(1000);
+			RobotControl.setBaseSpeed(900);
+			RobotControl.goHardRight();
+			for(int i=0; i<200; i++) {
+				RobotControl.beep(200, (int)(Math.random() * 1000.0));
+			}
+			Thread.sleep(1000);
 			RobotControl.stop();
-			RobotControl.beep(1000);
 			System.exit(0);
 		}
 
@@ -85,12 +97,7 @@ public class Robot {
 			if( RobotControl.obstacleDetected() ) {
 				boolean onLine = false;
 				RobotControl.goHardRight();
-				while(!RobotControl.blackDetectedEither() || !onLine) {
-					if( ! onLine && ! RobotControl.blackDetectedEither() ) {
-						onLine = true;
-					}
-					Thread.sleep(INTERVAL);
-				}				
+				turnUntilLine();			
 			}
 			else {
 				processMovement();

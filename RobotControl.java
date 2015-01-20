@@ -17,8 +17,8 @@ public class RobotControl {
 	private final static int RIGHT_LIGHT_THESHOLD = 570;
 
 	// Object distance threshold value
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 12;
-	private final static int NEAR_OBJECT_DISTANCE_THRESHOLD = 15;
+	private final static int OBSTACLE_DISTANCE_THRESHOLD = 14;
+	private final static int NEAR_OBJECT_DISTANCE_THRESHOLD = 18;
 	
 	// New SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
@@ -77,8 +77,14 @@ public class RobotControl {
 	 * Used to make beep sound for a given duration
 	 * @param duration int length of tone
 	 */
+
+	public static void beep(int duration, int hz)
+	{
+		Sound.playTone(hz, duration);
+	}
+
 	public static void beep(int duration) {
-		Sound.playTone(500, duration);
+		beep(duration, 500);
 	}
 
 	/**
