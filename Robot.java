@@ -18,7 +18,7 @@ public class Robot {
 			RobotControl.stop();
 			Thread.sleep(2000);
 
-			RobotControl.goHardRight();
+			RobotControl.goRight(4);
 
 			boolean offLine = false;
 
@@ -66,8 +66,8 @@ public class Robot {
 			RobotControl.goForward();
 		}
 
-		// On spot
-		if( leftSensorDetect && rightSensorDetect ) {
+		// On spot (only if black detected from both left and right sensors, and no object is detected)
+		if( leftSensorDetect && rightSensorDetect && !RobotControl.nearObject()) {
 			RobotControl.stop();
 			RobotControl.beep(1000);
 			System.exit(0);
@@ -83,7 +83,14 @@ public class Robot {
 		while(true) {
 			// updateState();
 			if( RobotControl.obstacleDetected() ) {
+				boolean onLine = false;
 				RobotControl.goHardRight();
+				while(!RobotControl.blackDetectedEither() || !onLine) {
+					if( ! onLine && ! RobotControl.blackDetectedEither() ) {
+						onLine = true;
+					}
+					Thread.sleep(INTERVAL);
+				}				
 			}
 			else {
 				processMovement();
@@ -112,7 +119,7 @@ public class Robot {
 			// 	// }
 
 			// }
-			Thread.sleep(40);
+			Thread.sleep(0);
 		}
 	}
 	

@@ -12,11 +12,13 @@ public class RobotControl {
 	private final static Motor MOTOR_RIGHT = Motor.C;
 
 	// Light threshold values for both sensors
-	private final static int LEFT_LIGHT_THRESHOLD = 460;
-	private final static int RIGHT_LIGHT_THESHOLD = 550;
+	// TODO: light value range, not just threshold
+	private final static int LEFT_LIGHT_THRESHOLD = 520;
+	private final static int RIGHT_LIGHT_THESHOLD = 570;
 
 	// Object distance threshold value
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 20;
+	private final static int OBSTACLE_DISTANCE_THRESHOLD = 12;
+	private final static int NEAR_OBJECT_DISTANCE_THRESHOLD = 15;
 	
 	// New SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
@@ -34,7 +36,7 @@ public class RobotControl {
 
 	// "Base" speed
 	private static int baseSpeed = 100;
-	private static int speedFactor = 2;
+	private static final int DEFAULT_SPEED_FACTOR = 2;
 
 
 	/**
@@ -65,6 +67,10 @@ public class RobotControl {
 
 	public static boolean obstacleDetected() {
 		return objectSensor.getDistance() < OBSTACLE_DISTANCE_THRESHOLD;
+	}
+
+	public static boolean nearObject() {
+		return objectSensor.getDistance() < NEAR_OBJECT_DISTANCE_THRESHOLD;
 	}
 
 	/**
@@ -98,17 +104,22 @@ public class RobotControl {
 	/**
 	 * Mutator - tell robot to turn left
 	 */
-	public static void goLeft() {
+
+	public static void goLeft(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 	}
 
+	public static void goLeft() {
+		goLeft(DEFAULT_SPEED_FACTOR);
+	}
+
 	/**
 	 * Mutator - tell robot to turn right
 	 */
-	public static void goRight() {
+	public static void goRight(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
@@ -117,16 +128,20 @@ public class RobotControl {
 		//~ MOTOR_RIGHT.stop();
 	}
 
+	public static void goRight() {
+		goRight(DEFAULT_SPEED_FACTOR);
+	}
+
 	public static void goHardLeft() {
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
+		MOTOR_LEFT.setSpeed(baseSpeed / 2);
+		MOTOR_RIGHT.setSpeed(baseSpeed / 2);
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.forward();
 	}
 
 	public static void goHardRight() {
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
+		MOTOR_LEFT.setSpeed(baseSpeed / 2);
+		MOTOR_RIGHT.setSpeed(baseSpeed / 2);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
 	}
@@ -174,8 +189,10 @@ public class RobotControl {
 
 	public static void main(String[] args)  throws InterruptedException {
 		RobotControl.initialise();
-		RobotControl.goForward();
-		Thread.sleep(1000);
-		RobotControl.stop();
+	
+		while(true) {
+			System.out.println("Distance: " + objectSensor.getDistance());
+			Thread.sleep(20);
+		}
 	}
 }
