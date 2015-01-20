@@ -7,20 +7,20 @@ public class Robot {
 		while(!RobotControl.blackDetectedEither()) {
 			Thread.sleep(INTERVAL);
 		}
-		
+
 		System.out.println("Reached line.");
 		// Stops
 		// Waits for a few secs
 		// Turns right
-			RobotControl.stop();
-			Thread.sleep(2000);
+		RobotControl.stop();
+		Thread.sleep(2000);
 
-			RobotControl.goRight(4);
+		RobotControl.goRight(4);
 
-			turnUntilLine();
+		turnUntilLine();
 
-			System.out.println("Lined up.");
-			RobotControl.stop();
+		System.out.println("Lined up.");
+		RobotControl.stop();
 	}
 
 	public static void turnUntilLine() throws InterruptedException {
@@ -70,11 +70,10 @@ public class Robot {
 				RobotControl.goHardLeft();
 				turnUntilLine();			
 			}
-			else {
-				processMovement();
-			}
+			
+			processMovement();
 
-			Thread.sleep(0);
+			Thread.sleep(INTERVAL);
 		}
 	}
 	
