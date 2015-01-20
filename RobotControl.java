@@ -12,13 +12,13 @@ public class RobotControl {
 	private final static Motor MOTOR_RIGHT = Motor.C;
 
 	// Light threshold values for both sensors
-	private final static int LEFT_LIGHT_THRESHOLD = 500;
-	private final static int RIGHT_LIGHT_THESHOLD = 460;
+	private final static int LEFT_LIGHT_THRESHOLD = 460;
+	private final static int RIGHT_LIGHT_THESHOLD = 550;
 
 	
 	// New SensorPort for Light Sensor
-	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S1;
-	private final static SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S2;
+	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
+	private final static SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
 	
 	// New SensorPort for Ultrasonic Sensor
 	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;

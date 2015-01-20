@@ -55,17 +55,17 @@ public class Robot {
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
 		if( leftSensorDetect && ! rightSensorDetect) {
-			RobotControl.goRight();
+			RobotControl.goLeft();
 		}
 		if( !leftSensorDetect && rightSensorDetect ) {
-			RobotControl.goLeft();
+			RobotControl.goRight();
 		}
-		if( leftSensorDetect && rightSensorDetect ) {
+		if( !leftSensorDetect && !rightSensorDetect ) {
 			RobotControl.goForward();
 		}
-		if( ! leftSensorDetect && ! rightSensorDetect ) {
-			RobotControl.goLeft();
-		}
+		// if( ! leftSensorDetect && ! rightSensorDetect ) {
+		// 	RobotControl.goLeft();
+		// }
 	}
 
 	public static void loop() throws InterruptedException {
