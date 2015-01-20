@@ -43,7 +43,7 @@ public class RobotControl {
 	 * Accessor - returns light detection status within a threshold value
 	 * @return boolean returns true if black is detected and false otherwise
 	 */
-	public static boolean blackDetected(LightSensor lsensor, int threshold) {
+	private static boolean blackDetected(LightSensor lsensor, int threshold) {
 		return lsensor.getLightValue() < threshold;
 	}
 
