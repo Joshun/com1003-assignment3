@@ -8,8 +8,8 @@ import icommand.nxt.comm.NXTCommand;
 import java.util.Scanner;
 
 public class RobotControl {
-	private final static Motor MOTOR_LEFT = Motor.B;
-	private final static Motor MOTOR_RIGHT = Motor.C;
+	private final static Motor MOTOR_LEFT = Motor.C;
+	private final static Motor MOTOR_RIGHT = Motor.B;
 
 	// Light threshold values for both sensors
 	// TODO: light value range, not just threshold
@@ -111,27 +111,28 @@ public class RobotControl {
 	 * Mutator - tell robot to turn left
 	 */
 
-	public static void goLeft(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-	}
-
-	public static void goLeft() {
-		goLeft(DEFAULT_SPEED_FACTOR);
-	}
 
 	/**
 	 * Mutator - tell robot to turn right
 	 */
-	public static void goRight(int speedFactor) {
+	public static void goLeft(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 		// MOTOR_RIGHT.backward();
 		//~ MOTOR_RIGHT.stop();
+	}
+
+	public static void goLeft() {
+		goLeft(DEFAULT_SPEED_FACTOR);
+	}
+
+	public static void goRight(int speedFactor) {
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.forward();
 	}
 
 	public static void goRight() {
@@ -196,9 +197,12 @@ public class RobotControl {
 	public static void main(String[] args)  throws InterruptedException {
 		RobotControl.initialise();
 	
-		while(true) {
-			System.out.println("Distance: " + objectSensor.getDistance());
-			Thread.sleep(20);
-		}
+		RobotControl.goHardRight();
+		Thread.sleep(2000);
+		RobotControl.stop();
+		// while(true) {
+		// 	System.out.println("Distance: " + objectSensor.getDistance());
+		// 	Thread.sleep(20);
+		// }
 	}
 }

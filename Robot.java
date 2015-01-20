@@ -96,7 +96,7 @@ public class Robot {
 			// updateState();
 			if( RobotControl.obstacleDetected() ) {
 				boolean onLine = false;
-				RobotControl.goHardRight();
+				RobotControl.goHardLeft();
 				turnUntilLine();			
 			}
 			else {
