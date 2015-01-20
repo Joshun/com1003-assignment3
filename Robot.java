@@ -1,5 +1,12 @@
 public class Robot {
 	private static final int INTERVAL = 50;
+	private static boolean debugMode = false;
+
+	public static void debugLog(String message) {
+		if (debugMode) {
+			System.out.println(message);
+		}
+	}
 
 	public static void untilLine() throws InterruptedException {
 		RobotControl.goForward();
@@ -8,7 +15,7 @@ public class Robot {
 			Thread.sleep(INTERVAL);
 		}
 
-		System.out.println("Reached line.");
+		debugLog("Reached line.");
 		// Stops
 		// Waits for a few secs
 		// Turns right
@@ -19,7 +26,7 @@ public class Robot {
 
 		turnUntilLine();
 
-		System.out.println("Lined up.");
+		debugLog("Lined up.");
 		RobotControl.stop();
 	}
 
@@ -78,6 +85,12 @@ public class Robot {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+
+		if (args.length == 1 && args[0].equals("-d")) {
+			debugMode = true;
+			debugLog("Debug Mode");
+		}
+
 		RobotControl.initialise();
 		RobotControl.stop();
 		Thread.sleep(1000);
