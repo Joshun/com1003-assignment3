@@ -32,7 +32,7 @@ public class RobotControl {
 
 	// "Base" speed
 	private static int baseSpeed = 100;
-	private static int speedFactor = 4;
+	private static int speedFactor = 2;
 
 
 	/**

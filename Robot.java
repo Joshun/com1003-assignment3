@@ -4,6 +4,8 @@ public class Robot {
 	private static boolean reachedLine = false;
 	private static final int INTERVAL = 50;
 
+	private static final boolean SKIP_LINEUP = true;
+
 	public static void untilLine() throws InterruptedException {
 		RobotControl.goForward();
 		while(!RobotControl.blackDetectedEither()) {
@@ -96,7 +98,7 @@ public class Robot {
 			// 	// }
 
 			// }
-			Thread.sleep(0);
+			Thread.sleep(40);
 		}
 	}
 	
@@ -106,7 +108,9 @@ public class Robot {
 		Thread.sleep(1000);
 		RobotControl.setBaseSpeed(150);
 
-		untilLine();
+		if( ! SKIP_LINEUP ) {
+			untilLine();
+		}
 		loop();
 
 		// RobotControl.debug();
