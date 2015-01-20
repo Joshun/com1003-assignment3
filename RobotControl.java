@@ -15,6 +15,8 @@ public class RobotControl {
 	private final static int LEFT_LIGHT_THRESHOLD = 460;
 	private final static int RIGHT_LIGHT_THESHOLD = 550;
 
+	// Object distance threshold value
+	private final static int OBSTACLE_DISTANCE_THRESHOLD = 20;
 	
 	// New SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
@@ -28,7 +30,7 @@ public class RobotControl {
 	private static LightSensor lightSensorRight;
 	
 	// Ultrasonic disance sensor object
-	private static UltrasonicSensor distanceDetect;
+	private static UltrasonicSensor objectSensor;
 
 	// "Base" speed
 	private static int baseSpeed = 100;
@@ -62,7 +64,7 @@ public class RobotControl {
 	}
 
 	public static boolean obstacleDetected() {
-		return false;
+		return objectSensor.getDistance() < OBSTACLE_DISTANCE_THRESHOLD;
 	}
 
 	/**
@@ -115,6 +117,19 @@ public class RobotControl {
 		//~ MOTOR_RIGHT.stop();
 	}
 
+	public static void goHardLeft() {
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed);
+		MOTOR_LEFT.backward();
+		MOTOR_RIGHT.forward();
+	}
+
+	public static void goHardRight() {
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed);
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.backward();
+	}
 
 	/**
 	 * Mutator - tell both motors to stop spinning
@@ -143,7 +158,7 @@ public class RobotControl {
 		NXTCommand.setVerify(true);
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
 		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
-		distanceDetect = new UltrasonicSensor(U_SENSOR_PORT);
+		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
 	}		
 
 	public static void debug() throws InterruptedException {

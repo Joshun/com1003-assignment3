@@ -4,7 +4,7 @@ public class Robot {
 	private static boolean reachedLine = false;
 	private static final int INTERVAL = 50;
 
-	private static final boolean SKIP_LINEUP = true;
+	private static final boolean SKIP_LINEUP = false;
 
 	public static void untilLine() throws InterruptedException {
 		RobotControl.goForward();
@@ -18,7 +18,7 @@ public class Robot {
 			RobotControl.stop();
 			Thread.sleep(2000);
 
-			RobotControl.goRight();
+			RobotControl.goHardRight();
 
 			boolean offLine = false;
 
@@ -65,6 +65,15 @@ public class Robot {
 		if( !leftSensorDetect && !rightSensorDetect ) {
 			RobotControl.goForward();
 		}
+
+		// On spot
+		if( leftSensorDetect && rightSensorDetect ) {
+			RobotControl.stop();
+			RobotControl.beep(1000);
+			System.exit(0);
+		}
+
+
 		// if( ! leftSensorDetect && ! rightSensorDetect ) {
 		// 	RobotControl.goLeft();
 		// }
@@ -72,8 +81,13 @@ public class Robot {
 
 	public static void loop() throws InterruptedException {
 		while(true) {
-			updateState();
-			processMovement();
+			// updateState();
+			if( RobotControl.obstacleDetected() ) {
+				RobotControl.goHardRight();
+			}
+			else {
+				processMovement();
+			}
 			// System.out.println("State changed? " + !RobotState.compareMovement(previousState, currentState));
 			// if (!RobotState.compareMovement(previousState, currentState)) {
 			// 	RobotMovement direction = currentState.getMovement();
@@ -112,6 +126,8 @@ public class Robot {
 			untilLine();
 		}
 		loop();
+
+
 
 		// RobotControl.debug();
 
