@@ -76,7 +76,7 @@ public class Robot {
 	 */
 	public static void fanfare(int noteLength) throws InterruptedException {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
-		for(int i=0; i<beepValues.length; i++) {
+		for (int beepValue : beepValues) {
 			RobotControl.beep(noteLength, beepValues[i]);
 			Thread.sleep(noteLength);
 		}
