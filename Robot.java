@@ -1,62 +1,47 @@
 public class Robot {
-	private static RobotState previousState;
-	private static RobotState currentState = new RobotState();
-	private static boolean reachedLine = false;
 	private static final int INTERVAL = 50;
+	private static boolean debugMode = false;
 
-	private static final boolean SKIP_LINEUP = false;
+	public static void debugLog(String message) {
+		if (debugMode) {
+			System.out.println(message);
+		}
+	}
 
 	public static void untilLine() throws InterruptedException {
 		RobotControl.goForward();
+
 		while(!RobotControl.blackDetectedEither()) {
 			Thread.sleep(INTERVAL);
 		}
-		System.out.println("Reached line.");
+
+		debugLog("Reached line.");
 		// Stops
 		// Waits for a few secs
 		// Turns right
-			RobotControl.stop();
-			Thread.sleep(2000);
+		RobotControl.stop();
+		Thread.sleep(2000);
 
-			RobotControl.goRight(4);
+		RobotControl.goRight(4);
 
-			turnUntilLine();
+		turnUntilLine();
 
-			System.out.println("Lined up.");
-			RobotControl.stop();
+		debugLog("Lined up.");
+		RobotControl.stop();
 	}
 
 	public static void turnUntilLine() throws InterruptedException {
 		boolean offLine = false;
 
-			while(!RobotControl.blackDetectedEither() || !offLine) {
-				if( ! offLine && ! RobotControl.blackDetectedEither() ) {
-					offLine = true;
-				}
-				Thread.sleep(INTERVAL);
+		while(!RobotControl.blackDetectedEither() || !offLine) {
+			if( ! offLine && ! RobotControl.blackDetectedEither() ) {
+				offLine = true;
 			}
+			Thread.sleep(INTERVAL);
+		}
 	}
 	
-	public static void updateState() {
-		previousState = currentState.copy();
 
-		boolean onLine = RobotControl.blackDetectedBoth();
-		
-	// Update current state based on environment
-		currentState.setDetectedBlack(onLine);
-		
-
-		currentState.setDetectedObstacle(RobotControl.obstacleDetected());
-	}
-	
-	// public static boolean blackDetected() {
-	// 	return Math.random() > 0.5;
-	// }
-	
-	// public static boolean obstacleDetected() {
-	// 	return Math.random() > 0.8;
-	// }	
-	
 	public static void fanfare() {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
 		for(int i=0; i<beepValues.length; i++) {
@@ -80,7 +65,7 @@ public class Robot {
 
 		// On spot (only if black detected from both left and right sensors, and no object is detected)
 		if( leftSensorDetect && rightSensorDetect && !RobotControl.nearObject()) {
-			System.out.println("Reached goal!");
+			debugLog("Reached goal!");
 			RobotControl.goForward();
 			Thread.sleep(1000);
 			RobotControl.setBaseSpeed(900);
@@ -93,74 +78,37 @@ public class Robot {
 			RobotControl.stop();
 			System.exit(0);
 		}
-
-
-		// if( ! leftSensorDetect && ! rightSensorDetect ) {
-		// 	RobotControl.goLeft();
-		// }
 	}
 
 	public static void loop() throws InterruptedException {
 		while(true) {
-			// updateState();
 			if( RobotControl.obstacleDetected() ) {
-				System.out.println("Detected obstacle!");
+				debugLog("Detected obstacle!");
 				RobotControl.goHardLeft();
 				turnUntilLine();			
 			}
 			else {
 				processMovement();
 			}
-			// System.out.println("State changed? " + !RobotState.compareMovement(previousState, currentState));
-			// if (!RobotState.compareMovement(previousState, currentState)) {
-			// 	RobotMovement direction = currentState.getMovement();
-				
-			// 	System.out.println(direction);
-			// 	switch(direction) {
-			// 		case LEFT:
-			// 			RobotControl.goLeft();
-			// 			break;
-			// 		case RIGHT:
-			// 			RobotControl.goRight();
-			// 			break;
-			// 		case FORWARD:
-			// 			RobotControl.goForward();
-			// 			break;
-			// 		case BACKWARD:
-			// 			RobotControl.goBackward();
-			// 			break;
-			// 	}
-			// 	// if (direction == RobotMovement.LEFT || direction == RobotMovement.RIGHT) {
-			// 	// 	currentState.swapTurnDirection();
-			// 	// }
 
-			// }
-			Thread.sleep(0);
+			Thread.sleep(INTERVAL);
 		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+
+		if (args.length == 1 && args[0].equals("-d")) {
+			debugMode = true;
+			debugLog("Debug Mode");
+		}
+
 		RobotControl.initialise();
 		RobotControl.stop();
 		Thread.sleep(1000);
 		RobotControl.setBaseSpeed(150);
 
-		if( ! SKIP_LINEUP ) {
-			untilLine();
-		}
+		untilLine();
 		loop();
-
-
-
-		// RobotControl.debug();
-
-		// RobotControl.goForward();
-		// Thread.sleep(4000);
-		// RobotControl.goRight();
-		// Thread.sleep(4000);
-		// RobotControl.goLeft();
-		// Thread.sleep(4000);
-		// RobotControl.stop();
 	}
 }
 

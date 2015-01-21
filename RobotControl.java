@@ -43,7 +43,7 @@ public class RobotControl {
 	 * Accessor - returns light detection status within a threshold value
 	 * @return boolean returns true if black is detected and false otherwise
 	 */
-	public static boolean blackDetected(LightSensor lsensor, int threshold) {
+	private static boolean blackDetected(LightSensor lsensor, int threshold) {
 		return lsensor.getLightValue() < threshold;
 	}
 
@@ -195,11 +195,100 @@ public class RobotControl {
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
+		// Test harness 
 		RobotControl.initialise();
 	
+		System.out.println("Robot is turning hard right");
 		RobotControl.goHardRight();
 		Thread.sleep(2000);
+
+		System.out.println("Robot is turning hard left");
+		RobotControl.goHardLeft();
+		Thread.sleep(2000);
+
+		System.out.println("Robot is turning right");
+		RobotControl.goRight();
+		Thread.sleep(2000);
+
+		System.out.println("Robot is turning left");
+		RobotControl.goLeft();
+		Thread.sleep(2000);
+
+		System.out.println("Robot is turning right slowly");
+		RobotControl.goRight(4);
+		Thread.sleep(2000);
+
+		System.out.println("Robot is turning right slowly");
+		RobotControl.goLeft(4);
+		Thread.sleep(2000);
+
+		System.out.println("Robot is going forwards");
+		RobotControl.goForward();
+		Thread.sleep(2000);
+
+		System.out.println("Robot is going backwards");
+		RobotControl.goBackward();
+		Thread.sleep(2000);
+
+		System.out.println("Base speed changed to 300");
+		RobotControl.setBaseSpeed(300);
+
+		System.out.println("Robot is going forwards");
+		RobotControl.goForward();
+		Thread.sleep(2000);
+
+		System.out.println("Robot has stopped");
 		RobotControl.stop();
+
+		System.out.println("Robot is beeping");
+		RobotControl.beep(2000);
+		Thread.sleep(2000);
+
+		System.out.println("Testing obstacle detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.obstacleDetected() ? "Detected obstacle" : "No obstacle detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing obstacle detection again in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.obstacleDetected() ? "Detected obstacle" : "No obstacle detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing left sensor black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing right sensor black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing right sensor black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing both sensors black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing both sensors black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing either sensors black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+
+		System.out.println("Testing either sensors black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);
+		
 		// while(true) {
 		// 	System.out.println("Distance: " + objectSensor.getDistance());
 		// 	Thread.sleep(20);
