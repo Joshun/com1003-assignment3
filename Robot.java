@@ -10,6 +10,9 @@ public class Robot {
 	// Maximum distance of object detected before robot turns
 	private final static int OBSTACLE_DETECTION_RANGE = 12;
 
+	// Base speed which the program will run at
+	private final static int BASE_SPEED = 150;
+
 	// Enables display of debug messages on console output
 	private static boolean debugMode = false;
 
@@ -163,7 +166,7 @@ public class Robot {
 
 		// Stop robot in case already moving from running program previously
 		RobotControl.stop();
-		RobotControl.setBaseSpeed(150);
+		RobotControl.setBaseSpeed(BASE_SPEED);
 
 		navigateToStartLine();
 		RobotControl.stop();
