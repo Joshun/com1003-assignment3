@@ -86,7 +86,8 @@ public class Robot {
 	public static void fanfare(int noteLength) throws InterruptedException {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 261, 261, 261, 329, 261, 329, 392, 440, 392, 349, 329, 293, 261};
 		for (int beepValue : beepValues) {
-			RobotControl.beep(noteLength, beepValue).for(noteLength);
+			// Beep is non-blocking so a delay is added so each note can be played
+			RobotControl.beep(noteLength, beepValue).wait(noteLength);
 		}
 	}
 
@@ -136,7 +137,7 @@ public class Robot {
 		}
 		debugLog(">> Found spot.");
 		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
-		RobotControl.goForward().for(1800);
+		RobotControl.goForward().wait(1800);
 	}
 
 	/**
@@ -167,7 +168,7 @@ public class Robot {
 		RobotControl.setBaseSpeed(BASE_SPEED);
 
 		navigateToStartLine();
-		RobotControl.stop().for(2000);
+		RobotControl.stop().wait(2000);
 
 		lineUpStart();
 		navigateToSpot();

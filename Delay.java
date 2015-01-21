@@ -1,5 +1,5 @@
 public class Delay() {
-  public void for(int duration) throws InterruptedException {
+  public void wait(int duration) throws InterruptedException {
     Thread.sleep(duration);
   }
 }
