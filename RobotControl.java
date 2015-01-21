@@ -288,10 +288,5 @@ public class RobotControl {
 		Thread.sleep(2000);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
 		Thread.sleep(2000);
-		
-		// while(true) {
-		// 	System.out.println("Distance: " + objectSensor.getDistance());
-		// 	Thread.sleep(20);
-		// }
 	}
 }

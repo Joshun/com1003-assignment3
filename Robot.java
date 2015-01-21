@@ -1,5 +1,5 @@
 public class Robot {
-	private static final int INTERVAL = 50;
+	private static final int INTERVAL = 30;
 	private static boolean debugMode = false;
 
 	public static void debugLog(String message) {
@@ -9,17 +9,17 @@ public class Robot {
 	}
 
 	public static void navigateToStartLine() throws InterruptedException {
-		debugLog("Moving to start line...");
+		debugLog("> Moving to start line...");
 		RobotControl.goForward();
 		blockExecutionUntilOnLine();
-		debugLog("\tReached line.");
+		debugLog(">> Reached line.");
 	}
 
 	public static void lineUpStart() throws InterruptedException {
-		debugLog("Lining up...");
-		RobotControl.goRight(4);
+		debugLog("> Lining up...");
+		RobotControl.goRight(5);
 		blockExecutionUntilOnLine();
-		debugLog("\tLined up.");
+		debugLog(">> Lined up.");
 	}
 
 	public static void blockExecutionUntilOnLine() throws InterruptedException {
@@ -58,8 +58,8 @@ public class Robot {
 	}
 
 	public static void celebrate() throws InterruptedException {
-		debugLog("Reached goal!");
 		RobotControl.stop();
+		System.out.println("> Starting victory sequence...");
 		RobotControl.setBaseSpeed(900);
 		RobotControl.goHardRight();
 		Thread.sleep(2500);
@@ -69,6 +69,7 @@ public class Robot {
 	}
 
 	public static void navigateToSpot() throws InterruptedException {
+		debugLog("> Navigating to spot...");
 		while(true) {
 
 			if(RobotControl.blackDetectedBoth() && !RobotControl.nearObject()) {
@@ -76,7 +77,7 @@ public class Robot {
 			}
 
 			if( RobotControl.obstacleDetected() ) {
-				debugLog("Detected obstacle!");
+				debugLog(">> Detected obstacle!");
 				RobotControl.goHardLeft();
 				blockExecutionUntilOnLine();		
 			}
@@ -86,6 +87,7 @@ public class Robot {
 
 			Thread.sleep(INTERVAL);
 		}
+		debugLog(">> Found spot.");
 		RobotControl.goForward();
 	}
 	
@@ -117,7 +119,7 @@ public class Robot {
 		Thread.sleep(2000);
 		celebrate();
 
-		debugLog("Finished!");
+		debugLog("> Finished!");
 	}
 }
 
