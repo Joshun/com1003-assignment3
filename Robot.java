@@ -103,6 +103,7 @@ public class Robot {
 
 		fanfare(100);
 	}
+
 	/**
 	 * Determines whether the robot has reached the spot (end goal) or not
 	 * @return Returns true if robot has reached spot
@@ -121,7 +122,6 @@ public class Robot {
 		// Keep navigating to spot until both sensors detect black and no obstacles are near it. 'Near' means in range of an object as opposed to right next to it.
 		// Near is used to prevent false positive of spot being detected when turning at corners
 		while (!reachedSpot()) {
-
 			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
 				debugLog(">> Detected obstacle!");
 				RobotControl.goHardLeft();
@@ -143,6 +143,7 @@ public class Robot {
 	 */
 	public static void setUpFlags(String[] args) {
 		if (args.length == 1) {
+			// Outputs debugging information if -d flag is used when calling the program
 			if (args[0].equals("-d")) {
 				debugMode = true;
 				debugLog("Debug Mode");
@@ -170,7 +171,7 @@ public class Robot {
 		lineUpStart();
 		navigateToSpot();
 
-		// Wait for 2 seconds to give robot time to move onto spot before calling ending sequence
+		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
 		Thread.sleep(1800);
 		RobotControl.stop();		
 		celebrate();
