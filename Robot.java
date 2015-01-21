@@ -33,6 +33,7 @@ public class Robot {
 	 */
 	public static void lineUpStart() throws InterruptedException {
 		debugLog("> Lining up...");
+		// Value of '4' ensures robot turns tightly enough to move onto line correctly
 		RobotControl.goRight(4);
 		blockExecutionUntilOnLine();
 		debugLog(">> Lined up.");
@@ -62,10 +63,10 @@ public class Robot {
 		if (leftSensorDetect && ! rightSensorDetect) {
 			RobotControl.goLeft();
 		}
-		if (!leftSensorDetect && rightSensorDetect) {
+		else if (!leftSensorDetect && rightSensorDetect) {
 			RobotControl.goRight();
 		}
-		if (!leftSensorDetect && !rightSensorDetect) {
+		else if (!leftSensorDetect && !rightSensorDetect) {
 			RobotControl.goForward();
 		}
 	}
@@ -86,7 +87,6 @@ public class Robot {
 	 * Makes robot spin and play tune
 	 */
 	public static void celebrate() throws InterruptedException {
-		RobotControl.stop();
 		debugLog("> Starting victory sequence...");
 		RobotControl.setBaseSpeed(900);
 		RobotControl.goHardRight();
@@ -149,6 +149,7 @@ public class Robot {
 		RobotControl.initialise();
 		setUpFlags(args);
 
+		// Stop robot in case already moving from running program previously
 		RobotControl.stop();
 		RobotControl.setBaseSpeed(150);
 
@@ -159,7 +160,9 @@ public class Robot {
 		lineUpStart();
 		navigateToSpot();
 
+		// Wait for 2 seconds to give robot time to move onto spot before calling ending sequence
 		Thread.sleep(2000);
+		RobotControl.stop();		
 		celebrate();
 
 		debugLog("> Finished!");
