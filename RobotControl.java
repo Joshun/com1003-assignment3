@@ -9,13 +9,17 @@ import icommand.nxt.comm.NXTCommand;
 
 public class RobotControl {
 
+	// Default ratio between wheels when turning (e.g. with a factor of 2, outer wheel is 2x faster than pivot wheel)
 	private static final int DEFAULT_SPEED_FACTOR = 2;
+
+	// Default frequency used for beeping
 	private static final int DEFAULT_BEEP_FREQ = 500;
 
 	private final static Motor MOTOR_LEFT = Motor.C;
 	private final static Motor MOTOR_RIGHT = Motor.B;
 
-	// Light threshold values for both sensors
+	// Light threshold values for both sensors (maximum brightness by which black is detected),
+	// callibrated specifically for our robot's sensors
 	private final static int LEFT_LIGHT_THRESHOLD = 520;
 	private final static int RIGHT_LIGHT_THESHOLD = 570;
 	
@@ -26,14 +30,14 @@ public class RobotControl {
 	// SensorPort for Ultrasonic Sensor
 	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
 	
-	// Lightsensor object
+	// Lightsensor objects
 	private static LightSensor lightSensorLeft;
 	private static LightSensor lightSensorRight;
 	
 	// Ultrasonic disance sensor object
 	private static UltrasonicSensor objectSensor;
 
-	// "Base" speed
+	// "Base" speed (used by most of the movement functions - all speed is relative to this)
 	private static int baseSpeed = 100;
 
 	/**
@@ -42,6 +46,7 @@ public class RobotControl {
 	public static void initialise() {
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
+		
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
 		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
 		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);

@@ -4,9 +4,13 @@
  */
 
 public class Robot {
-	private static final int INTERVAL = 30;
+	// Delay used by continuous loops to prevent intense CPU usage
+	private static final int DELAY_BETWEEN_CYCLES = 30;
+
+	// Maximum distance of object detected before robot turns
 	private final static int OBSTACLE_DETECTION_RANGE = 12;
 
+	// Enables display of debug messages on console output
 	private static boolean debugMode = false;
 
 	/**
@@ -50,7 +54,7 @@ public class Robot {
 			if (!RobotControl.blackDetectedEither()) {
 				hasComeOffLine = true;
 			}
-			Thread.sleep(INTERVAL);
+			Thread.sleep(DELAY_BETWEEN_CYCLES);
 		}
 	}
 	
@@ -127,7 +131,7 @@ public class Robot {
 				alignWithLine();
 			}
 
-			Thread.sleep(INTERVAL);
+			Thread.sleep(DELAY_BETWEEN_CYCLES);
 		}
 		debugLog(">> Found spot.");
 		RobotControl.goForward();
@@ -167,7 +171,7 @@ public class Robot {
 		navigateToSpot();
 
 		// Wait for 2 seconds to give robot time to move onto spot before calling ending sequence
-		Thread.sleep(2000);
+		Thread.sleep(1800);
 		RobotControl.stop();		
 		celebrate();
 
