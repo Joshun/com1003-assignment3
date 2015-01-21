@@ -140,7 +140,7 @@ public class Robot {
 			else if (args[0].equals("-s")) {
 				System.out.println("Stopping robot...");
 				RobotControl.stop();
-				return;
+				System.exit(0);
 			}
 		}
 	}
