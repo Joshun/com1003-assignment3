@@ -4,10 +4,18 @@
  */
 
 public class Robot {
-	private static final int INTERVAL = 30;
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 12;
+	// Delay used by continuous loops to prevent intense CPU usage
+	private static final int DELAY_BETWEEN_CYCLES = 30;
 
+	// Maximum distance of object detected before robot turns
+	private final static int OBSTACLE_DETECTION_RANGE = 12;
+
+	// Base speed which the program will run at
+	private final static int BASE_SPEED = 150;
+
+	// Enables display of debug messages on console output
 	private static boolean debugMode = false;
+
 	/**
 	 * Output to console if debug mode is on
 	 * @param message String Message to display
@@ -33,6 +41,7 @@ public class Robot {
 	 */
 	public static void lineUpStart() throws InterruptedException {
 		debugLog("> Lining up...");
+		// Value of '4' ensures robot turns tightly enough to move onto line correctly
 		RobotControl.goRight(4);
 		blockExecutionUntilOnLine();
 		debugLog(">> Lined up.");
@@ -48,7 +57,7 @@ public class Robot {
 			if (!RobotControl.blackDetectedEither()) {
 				hasComeOffLine = true;
 			}
-			Thread.sleep(INTERVAL);
+			Thread.sleep(DELAY_BETWEEN_CYCLES);
 		}
 	}
 	
@@ -62,10 +71,10 @@ public class Robot {
 		if (leftSensorDetect && ! rightSensorDetect) {
 			RobotControl.goLeft();
 		}
-		if (!leftSensorDetect && rightSensorDetect) {
+		else if (!leftSensorDetect && rightSensorDetect) {
 			RobotControl.goRight();
 		}
-		if (!leftSensorDetect && !rightSensorDetect) {
+		else if (!leftSensorDetect && !rightSensorDetect) {
 			RobotControl.goForward();
 		}
 	}
@@ -75,7 +84,7 @@ public class Robot {
 	 * @param noteLength int Duration of each note in milliseconds
 	 */
 	public static void fanfare(int noteLength) throws InterruptedException {
-		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
+		int[] beepValues = {261, 261, 261, 329, 261, 329, 261, 261, 261, 329, 261, 329, 392, 440, 392, 349, 329, 293, 261};
 		for (int beepValue : beepValues) {
 			RobotControl.beep(noteLength, beepValue);
 			Thread.sleep(noteLength);
@@ -86,21 +95,25 @@ public class Robot {
 	 * Makes robot spin and play tune
 	 */
 	public static void celebrate() throws InterruptedException {
-		RobotControl.stop();
 		debugLog("> Starting victory sequence...");
-		RobotControl.setBaseSpeed(900);
-		RobotControl.goHardRight();
+
+		RobotControl.goHardRight(900);
 		Thread.sleep(2500);
+
 		RobotControl.stop();
 		Thread.sleep(500);
-		fanfare(100);			
+
+		fanfare(100);
 	}
+
 	/**
 	 * Determines whether the robot has reached the spot (end goal) or not
 	 * @return Returns true if robot has reached spot
 	 */
 	public static boolean reachedSpot() {
-		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD + 5);
+		// Need to ensure that there are no objects in range, preventing a false positive that can occur when turning at corners.
+		// + 5 is used because this needs to be checked before the robot gets to the turning point
+		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE + 5);
 	}
 
 	/**
@@ -111,8 +124,7 @@ public class Robot {
 		// Keep navigating to spot until both sensors detect black and no obstacles are near it. 'Near' means in range of an object as opposed to right next to it.
 		// Near is used to prevent false positive of spot being detected when turning at corners
 		while (!reachedSpot()) {
-
-			if (RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD)) {
+			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
 				debugLog(">> Detected obstacle!");
 				RobotControl.goHardLeft();
 				blockExecutionUntilOnLine();
@@ -121,10 +133,12 @@ public class Robot {
 				alignWithLine();
 			}
 
-			Thread.sleep(INTERVAL);
+			Thread.sleep(DELAY_BETWEEN_CYCLES);
 		}
 		debugLog(">> Found spot.");
 		RobotControl.goForward();
+		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
+		Thread.sleep(1800);
 	}
 
 	/**
@@ -133,6 +147,7 @@ public class Robot {
 	 */
 	public static void setUpFlags(String[] args) {
 		if (args.length == 1) {
+			// Outputs debugging information if -d flag is used when calling the program
 			if (args[0].equals("-d")) {
 				debugMode = true;
 				debugLog("Debug Mode");
@@ -140,7 +155,7 @@ public class Robot {
 			else if (args[0].equals("-s")) {
 				System.out.println("Stopping robot...");
 				RobotControl.stop();
-				return;
+				System.exit(0);
 			}
 		}
 	}
@@ -149,8 +164,9 @@ public class Robot {
 		RobotControl.initialise();
 		setUpFlags(args);
 
+		// Stop robot in case already moving from running program previously
 		RobotControl.stop();
-		RobotControl.setBaseSpeed(150);
+		RobotControl.setBaseSpeed(BASE_SPEED);
 
 		navigateToStartLine();
 		RobotControl.stop();
@@ -158,8 +174,8 @@ public class Robot {
 
 		lineUpStart();
 		navigateToSpot();
+		RobotControl.stop();	
 
-		Thread.sleep(2000);
 		celebrate();
 
 		debugLog("> Finished!");
