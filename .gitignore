@@ -2,3 +2,6 @@ icommand.properties
 *.bat
 *.class
 doc
+diagrams
+*.sh
+*.md
