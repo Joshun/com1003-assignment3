@@ -8,48 +8,41 @@ public class Robot {
 		}
 	}
 
-	public static void untilLine() throws InterruptedException {
+	public static void navigateToStartLine() throws InterruptedException {
+		debugLog("Moving to start line...");
 		RobotControl.goForward();
-
-		while(!RobotControl.blackDetectedEither()) {
-			Thread.sleep(INTERVAL);
-		}
-
-		debugLog("Reached line.");
-		// Stops
-		// Waits for a few secs
-		// Turns right
-		RobotControl.stop();
-		Thread.sleep(2000);
-
-		RobotControl.goRight(4);
-
-		turnUntilLine();
-
-		debugLog("Lined up.");
-		RobotControl.stop();
+		blockExecutionUntilOnLine();
+		debugLog("\tReached line.");
 	}
 
-	public static void turnUntilLine() throws InterruptedException {
-		boolean offLine = false;
+	public static void lineUpStart() throws InterruptedException {
+		debugLog("Lining up...");
+		RobotControl.goRight(4);
+		blockExecutionUntilOnLine();
+		debugLog("\tLined up.");
+	}
 
-		while(!RobotControl.blackDetectedEither() || !offLine) {
-			if( ! offLine && ! RobotControl.blackDetectedEither() ) {
-				offLine = true;
+	public static void blockExecutionUntilOnLine() throws InterruptedException {
+		boolean hasComeOffLine = false;
+
+		while( !hasComeOffLine || !RobotControl.blackDetectedEither() ) {
+			if(! RobotControl.blackDetectedEither() ) {
+				hasComeOffLine = true;
 			}
 			Thread.sleep(INTERVAL);
 		}
 	}
 	
 
-	public static void fanfare() {
+	public static void fanfare(int noteLength) throws InterruptedException {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
 		for(int i=0; i<beepValues.length; i++) {
-			RobotControl.beep(200, beepValues[i]);
+			RobotControl.beep(noteLength, beepValues[i]);
+			Thread.sleep(noteLength);
 		}
 	}
 
-	public static void processMovement() throws InterruptedException {
+	public static void alignWithLine() throws InterruptedException {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
@@ -62,53 +55,69 @@ public class Robot {
 		if( !leftSensorDetect && !rightSensorDetect ) {
 			RobotControl.goForward();
 		}
-
-		// On spot (only if black detected from both left and right sensors, and no object is detected)
-		if( leftSensorDetect && rightSensorDetect && !RobotControl.nearObject()) {
-			debugLog("Reached goal!");
-			RobotControl.goForward();
-			Thread.sleep(1000);
-			RobotControl.setBaseSpeed(900);
-			RobotControl.goHardRight();
-			fanfare();
-			// for(int i=0; i<200; i++) {
-			// 	RobotControl.beep(200, (int)(Math.random() * 1000.0));
-			// }
-			Thread.sleep(1000);
-			RobotControl.stop();
-			System.exit(0);
-		}
 	}
 
-	public static void loop() throws InterruptedException {
+	public static void celebrate() throws InterruptedException {
+		debugLog("Reached goal!");
+		RobotControl.stop();
+		RobotControl.setBaseSpeed(900);
+		RobotControl.goHardRight();
+		Thread.sleep(2500);
+		RobotControl.stop();
+		Thread.sleep(500);
+		fanfare(100);			
+	}
+
+	public static void navigateToSpot() throws InterruptedException {
 		while(true) {
+
+			if(RobotControl.blackDetectedBoth() && !RobotControl.nearObject()) {
+				break;
+			}
+
 			if( RobotControl.obstacleDetected() ) {
 				debugLog("Detected obstacle!");
 				RobotControl.goHardLeft();
-				turnUntilLine();			
+				blockExecutionUntilOnLine();		
 			}
 			else {
-				processMovement();
+				alignWithLine();
 			}
 
 			Thread.sleep(INTERVAL);
 		}
+		RobotControl.goForward();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
 
-		if (args.length == 1 && args[0].equals("-d")) {
-			debugMode = true;
-			debugLog("Debug Mode");
+		RobotControl.initialise();
+		if( args.length == 1) {
+			if( args[0].equals("-d") ) {
+				debugMode = true;
+				debugLog("Debug Mode");
+			}
+			else if( args[0].equals("-s") ) {
+				System.out.println("Stopping robot...");
+				RobotControl.stop();
+				return;
+			}
 		}
 
-		RobotControl.initialise();
 		RobotControl.stop();
-		Thread.sleep(1000);
 		RobotControl.setBaseSpeed(150);
 
-		untilLine();
-		loop();
+		navigateToStartLine();
+		RobotControl.stop();
+		Thread.sleep(2000);
+
+		lineUpStart();
+		navigateToSpot();
+
+		Thread.sleep(2000);
+		celebrate();
+
+		debugLog("Finished!");
 	}
 }
 
