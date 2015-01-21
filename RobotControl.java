@@ -17,7 +17,7 @@ public class RobotControl {
 	private final static int RIGHT_LIGHT_THESHOLD = 570;
 
 	// Object distance threshold value
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 14;
+	private final static int OBSTACLE_DISTANCE_THRESHOLD = 13;
 	private final static int NEAR_OBJECT_DISTANCE_THRESHOLD = 18;
 	
 	// New SensorPort for Light Sensor
@@ -48,12 +48,12 @@ public class RobotControl {
 	}
 
 	public static boolean blackDetectedLeft() {
-		System.out.println("Left sensor: " + lightSensorLeft.getLightValue() + " " + (lightSensorLeft.getLightValue() < LEFT_LIGHT_THRESHOLD));
+		// System.out.println("Left sensor: " + lightSensorLeft.getLightValue() + " " + (lightSensorLeft.getLightValue() < LEFT_LIGHT_THRESHOLD));
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
 	}
 
 	public static boolean blackDetectedRight() {
-		System.out.println("Right sensor: " + lightSensorRight.getLightValue() + " " + (lightSensorRight.getLightValue() < RIGHT_LIGHT_THESHOLD));
+		// System.out.println("Right sensor: " + lightSensorRight.getLightValue() + " " + (lightSensorRight.getLightValue() < RIGHT_LIGHT_THESHOLD));
 		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 

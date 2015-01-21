@@ -57,6 +57,13 @@ public class Robot {
 	// 	return Math.random() > 0.8;
 	// }	
 	
+	public static void fanfare() {
+		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
+		for(int i=0; i<beepValues.length; i++) {
+			RobotControl.beep(200, beepValues[i]);
+		}
+	}
+
 	public static void processMovement() throws InterruptedException {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
@@ -73,13 +80,15 @@ public class Robot {
 
 		// On spot (only if black detected from both left and right sensors, and no object is detected)
 		if( leftSensorDetect && rightSensorDetect && !RobotControl.nearObject()) {
+			System.out.println("Reached goal!");
 			RobotControl.goForward();
 			Thread.sleep(1000);
 			RobotControl.setBaseSpeed(900);
 			RobotControl.goHardRight();
-			for(int i=0; i<200; i++) {
-				RobotControl.beep(200, (int)(Math.random() * 1000.0));
-			}
+			fanfare();
+			// for(int i=0; i<200; i++) {
+			// 	RobotControl.beep(200, (int)(Math.random() * 1000.0));
+			// }
 			Thread.sleep(1000);
 			RobotControl.stop();
 			System.exit(0);
@@ -95,7 +104,7 @@ public class Robot {
 		while(true) {
 			// updateState();
 			if( RobotControl.obstacleDetected() ) {
-				boolean onLine = false;
+				System.out.println("Detected obstacle!");
 				RobotControl.goHardLeft();
 				turnUntilLine();			
 			}
