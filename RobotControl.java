@@ -1,30 +1,29 @@
 /**
+ * Wrapper class for abstracting the NXT icommand api
  * @author Jack Deadman
  * @author Joshua O'Leary
  */
 
 import icommand.nxt.*;
 import icommand.nxt.comm.NXTCommand;
-import java.util.Scanner;
 
 public class RobotControl {
+
+	private static final int DEFAULT_SPEED_FACTOR = 2;
+	private static final int DEFAULT_BEEP_FREQ = 500;
+
 	private final static Motor MOTOR_LEFT = Motor.C;
 	private final static Motor MOTOR_RIGHT = Motor.B;
 
 	// Light threshold values for both sensors
-	// TODO: light value range, not just threshold
 	private final static int LEFT_LIGHT_THRESHOLD = 520;
 	private final static int RIGHT_LIGHT_THESHOLD = 570;
-
-	// Object distance threshold value
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 13;
-	private final static int NEAR_OBJECT_DISTANCE_THRESHOLD = 18;
 	
-	// New SensorPort for Light Sensor
+	// SensorPort for Light Sensor
 	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
 	private final static SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
 	
-	// New SensorPort for Ultrasonic Sensor
+	// SensorPort for Ultrasonic Sensor
 	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
 	
 	// Lightsensor object
@@ -36,46 +35,82 @@ public class RobotControl {
 
 	// "Base" speed
 	private static int baseSpeed = 100;
-	private static final int DEFAULT_SPEED_FACTOR = 2;
-
 
 	/**
-	 * Accessor - returns light detection status within a threshold value
-	 * @return boolean returns true if black is detected and false otherwise
+	 * Establishes connection with robot and sets up sensors
 	 */
-	private static boolean blackDetected(LightSensor lsensor, int threshold) {
-		return lsensor.getLightValue() < threshold;
+	public static void initialise() {
+		NXTCommand.open();
+		NXTCommand.setVerify(true);
+		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
+		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
+		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
+	}	
+
+	/**
+	 * Set the robot's base speed for all movement
+	 * @param speed int Robot's base speed
+	 */
+	public static void setBaseSpeed(int speed) {
+		baseSpeed = speed;
 	}
 
+	/**
+	 * Base method for determining whether a light sensor detects black within a given threshold
+	 * @param lsensor LightSensor NXT LightSensor
+	 * @param threshold int Highest value for which black is still detected
+	 * @return boolean Returns true if given light sensor detects black
+	 */
+	private static boolean blackDetected(LightSensor lsensor, int threshold) {
+		return lsensor.getLightValue() <= threshold;
+	}
+
+	/**
+	 * Determines whether the left light sensor detects black
+	 * @return boolean Returns true if left sensor detects black
+	 */
 	public static boolean blackDetectedLeft() {
 		// System.out.println("Left sensor: " + lightSensorLeft.getLightValue() + " " + (lightSensorLeft.getLightValue() < LEFT_LIGHT_THRESHOLD));
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
 	}
 
+	/**
+	 * Determines whether the right light sensor detects black
+	 * @return boolean Returns true if right sensor detects black
+	 */
 	public static boolean blackDetectedRight() {
-		// System.out.println("Right sensor: " + lightSensorRight.getLightValue() + " " + (lightSensorRight.getLightValue() < RIGHT_LIGHT_THESHOLD));
 		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
+	/**
+	 * Helper method determining whether either sensor detects black
+	 * @return boolean Returns true if either sensors detects black
+	 */
 	public static boolean blackDetectedEither() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) || blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
+	/**
+	 * Helper method determining whether both sensors detects black
+	 * @return boolean Returns true if both sensors detects black
+	 */
 	public static boolean blackDetectedBoth() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) && blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
 	}
 
-	public static boolean obstacleDetected() {
-		return objectSensor.getDistance() < OBSTACLE_DISTANCE_THRESHOLD;
-	}
-
-	public static boolean nearObject() {
-		return objectSensor.getDistance() < NEAR_OBJECT_DISTANCE_THRESHOLD;
+	/**
+	 * Determines whether an obstacle is detected in a given range
+	 * @param range int Furthest distance until object is still detected (in cm)
+	 * @return boolean Returns true 
+	 */
+	public static boolean obstacleDetected(int range) {
+		return objectSensor.getDistance() <= range;
 	}
 
 	/**
-	 * Used to make beep sound for a given duration
-	 * @param duration int length of tone
+	 * Makes a beep sound for a given duration
+	 * @param duration int Length of beep in milliseconds
+	 * @param hz int Beep frequency in hertz
 	 */
 
 	public static void beep(int duration, int hz)
@@ -83,22 +118,16 @@ public class RobotControl {
 		Sound.playTone(hz, duration);
 	}
 
+	/**
+	 * Helper method for a default beep sound
+	 * @param duration Length of beep in milliseconds
+	 */
 	public static void beep(int duration) {
 		beep(duration, 500);
 	}
 
 	/**
-	 * Mutator - tell robot to move backward by telling both motors to spin backwards
-	 */
-	public static void goBackward(){
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed);		
-		MOTOR_LEFT.backward();
-		MOTOR_RIGHT.backward();
-	}
-
-	/**
-	 * Mutator - tell robot to move forward by telling both motors to spin forwards
+	 * Instruct robot to move forward
 	 */
 	public static void goForward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
@@ -108,53 +137,17 @@ public class RobotControl {
 	}
 
 	/**
-	 * Mutator - tell robot to turn left
+	 * Instruct robot to move backward
 	 */
-
-
-	/**
-	 * Mutator - tell robot to turn right
-	 */
-	public static void goLeft(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-		// MOTOR_RIGHT.backward();
-		//~ MOTOR_RIGHT.stop();
-	}
-
-	public static void goLeft() {
-		goLeft(DEFAULT_SPEED_FACTOR);
-	}
-
-	public static void goRight(int speedFactor) {
+	public static void goBackward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-	}
-
-	public static void goRight() {
-		goRight(DEFAULT_SPEED_FACTOR);
-	}
-
-	public static void goHardLeft() {
-		MOTOR_LEFT.setSpeed(baseSpeed / 2);
-		MOTOR_RIGHT.setSpeed(baseSpeed / 2);
+		MOTOR_RIGHT.setSpeed(baseSpeed);		
 		MOTOR_LEFT.backward();
-		MOTOR_RIGHT.forward();
-	}
-
-	public static void goHardRight() {
-		MOTOR_LEFT.setSpeed(baseSpeed / 2);
-		MOTOR_RIGHT.setSpeed(baseSpeed / 2);
-		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
 	}
 
 	/**
-	 * Mutator - tell both motors to stop spinning
+	 * Instruct the robot to stop all movement
 	 */
 	public static void stop() {
 		MOTOR_LEFT.stop();
@@ -162,36 +155,75 @@ public class RobotControl {
 	}
 
 	/**
-	 * Mutator - sets the speed of both motors
-	 * @param speed int speed value (0-900)
+	 * Instruct robot to turn left
+	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 */
-
-	public static void setBaseSpeed(int speed) {
-		baseSpeed = speed;
+	public static void goLeft(int speedFactor) {
+		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_RIGHT.setSpeed(baseSpeed);
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.forward();
 	}
 
-	// private static void setSpeed(int speed) {
-	// 	MOTOR_LEFT.setSpeed(speed);
-	// 	MOTOR_RIGHT.setSpeed(speed);
-	// }
+	/**
+	 * Instruct robot to turn left using the default speed ratio
+	 */
+	public static void goLeft() {
+		goLeft(DEFAULT_SPEED_FACTOR);
+	}
 
-	public static void initialise() {
-		NXTCommand.open();
-		NXTCommand.setVerify(true);
-		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
-		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
-		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
-	}		
+	/**
+	 * Instruct robot to turn right
+	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 */
+	public static void goRight(int speedFactor) {
+		MOTOR_LEFT.setSpeed(baseSpeed);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.forward();
+	}
 
-	public static void debug() throws InterruptedException {
-		while( true ) {
-			int lSensorValue = lightSensorLeft.getLightValue();
-			int rSensorValue = lightSensorRight.getLightValue();
+	/**
+	 * Instruct robot to turn right using the default speed ratio
+	 */
+	public static void goRight() {
+		goRight(DEFAULT_SPEED_FACTOR);
+	}
 
-			System.out.println("Left: " + lSensorValue + " Right: " + rSensorValue);
+	/**
+	 * Instruct the robot to spin left on the spot
+	 * @param speed int Speed for turning left
+	 */
+	public static void goHardLeft(int speed) {
+		MOTOR_LEFT.setSpeed(speed / 2);
+		MOTOR_RIGHT.setSpeed(speed / 2);
+		MOTOR_LEFT.backward();
+		MOTOR_RIGHT.forward();
+	}
 
-			Thread.sleep(50);
-		}
+	/**
+	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
+	 */
+	public static void goHardLeft() {
+		goHardLeft(baseSpeed);
+	}
+
+	/**
+	 * Instruct the robot to spin right on the spot
+	 * @param speed int Speed for turning right
+	 */
+	public static void goHardRight(int speed) {
+		MOTOR_LEFT.setSpeed(speed / 2);
+		MOTOR_RIGHT.setSpeed(speed / 2);
+		MOTOR_LEFT.forward();
+		MOTOR_RIGHT.backward();
+	}
+
+	/**
+	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
+	 */
+	public static void goHardRight() {
+		goHardRight(baseSpeed);
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
@@ -246,18 +278,23 @@ public class RobotControl {
 
 		System.out.println("Testing obstacle detection in 2 seconds");
 		Thread.sleep(2000);
-		System.out.println(RobotControl.obstacleDetected() ? "Detected obstacle" : "No obstacle detected");
+		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
 		Thread.sleep(2000);
 
 		System.out.println("Testing obstacle detection again in 2 seconds");
 		Thread.sleep(2000);
-		System.out.println(RobotControl.obstacleDetected() ? "Detected obstacle" : "No obstacle detected");
+		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
 		Thread.sleep(2000);
 
 		System.out.println("Testing left sensor black detection in 2 seconds");
 		Thread.sleep(2000);
 		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
 		Thread.sleep(2000);
+
+		System.out.println("Testing left sensor black detection in 2 seconds");
+		Thread.sleep(2000);
+		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
+		Thread.sleep(2000);		
 
 		System.out.println("Testing right sensor black detection in 2 seconds");
 		Thread.sleep(2000);
