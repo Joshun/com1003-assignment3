@@ -183,7 +183,7 @@ public class RobotControl {
 	 */
 	public static void goRight(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor == 0 ? speedFactor);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 	}
