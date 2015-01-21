@@ -13,6 +13,8 @@ public class Robot {
 	// Base speed which the program will run at
 	private final static int BASE_SPEED = 150;
 
+	private static final Delayer CPU_REST = new Delayer(DELAY_BETWEEN_CYCLES);
+
 	// Enables display of debug messages on console output
 	private static boolean debugMode = false;
 
@@ -57,7 +59,7 @@ public class Robot {
 			if (!RobotControl.blackDetectedEither()) {
 				hasComeOffLine = true;
 			}
-			Thread.sleep(DELAY_BETWEEN_CYCLES);
+			CPU_REST.apply();
 		}
 	}
 	
@@ -86,8 +88,8 @@ public class Robot {
 	public static void fanfare(int noteLength) throws InterruptedException {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 261, 261, 261, 329, 261, 329, 392, 440, 392, 349, 329, 293, 261};
 		for (int beepValue : beepValues) {
-			// Beep is non-blocking so a delay is added so each note can be played
-			RobotControl.beep(noteLength, beepValue).wait(noteLength);
+			// Beep is non-blocking so a wait is added so each note has time to be played
+			RobotControl.beep(noteLength, beepValue).waitFor(noteLength);
 		}
 	}
 
@@ -97,11 +99,8 @@ public class Robot {
 	public static void celebrate() throws InterruptedException {
 		debugLog("> Starting victory sequence...");
 
-		RobotControl.goHardRight(900);
-		Thread.sleep(2500);
-
-		RobotControl.stop();
-		Thread.sleep(500);
+		RobotControl.goHardRight(900).waitFor(2500);
+		RobotControl.stop().waitFor(500);
 
 		fanfare(100);
 	}
@@ -132,12 +131,11 @@ public class Robot {
 			else {
 				alignWithLine();
 			}
-
-			Thread.sleep(DELAY_BETWEEN_CYCLES);
+			CPU_REST.apply();
 		}
 		debugLog(">> Found spot.");
 		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
-		RobotControl.goForward().wait(1800);
+		RobotControl.goForward().waitFor(1800);
 	}
 
 	/**
@@ -160,6 +158,7 @@ public class Robot {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
+
 		RobotControl.initialise();
 		setUpFlags(args);
 
@@ -168,10 +167,10 @@ public class Robot {
 		RobotControl.setBaseSpeed(BASE_SPEED);
 
 		navigateToStartLine();
-		RobotControl.stop().wait(2000);
+		RobotControl.stop().waitFor(2000);
 
 		lineUpStart();
-		
+
 		navigateToSpot();
 		RobotControl.stop();	
 

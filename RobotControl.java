@@ -118,142 +118,144 @@ public class RobotControl {
 	 * @param hz int Beep frequency in hertz
 	 */
 
-	public static Delay beep(int duration, int hz)
+	public static Delayer beep(int duration, int hz)
 	{
 		Sound.playTone(hz, duration);
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method for a default beep sound
 	 * @param duration Length of beep in milliseconds
 	 */
-	public static void beep(int duration) {
+	public static Delayer beep(int duration) {
 		beep(duration, 500);
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to move forward
 	 */
-	public static Delay goForward(){
+	public static Delayer goForward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to move backward
 	 */
-	public static Delay goBackward(){
+	public static Delayer goBackward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed);		
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to stop all movement
 	 */
-	public static Delay stop() {
+	public static Delayer stop() {
 		MOTOR_LEFT.stop();
 		MOTOR_RIGHT.stop();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn left
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 */
-	public static Delay goLeft(int speedFactor) {
+	public static Delayer goLeft(int speedFactor) {
 		// 
 		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn left using the default speed ratio
 	 */
-	public static Delay goLeft() {
+	public static Delayer goLeft() {
 		goLeft(DEFAULT_SPEED_FACTOR);
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn right
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 */
-	public static Delay goRight(int speedFactor) {
+	public static Delayer goRight(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn right using the default speed ratio
 	 */
-	public static Delay goRight() {
+	public static Delayer goRight() {
 		goRight(DEFAULT_SPEED_FACTOR);
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to spin left on the spot
 	 * @param speed int Speed for turning left
 	 */
-	public static Delay goHardLeft(int speed) {
+	public static Delayer goHardLeft(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.forward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
 	 */
-	public static Delay goHardLeft() {
+	public static Delayer goHardLeft() {
 		goHardLeft(baseSpeed);
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to spin right on the spot
 	 * @param speed int Speed for turning right
 	 */
-	public static Delay goHardRight(int speed) {
+	public static Delayer goHardRight(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
 	 */
-	public static Delay goHardRight() {
+	public static Delayer goHardRight() {
 		goHardRight(baseSpeed);
 
-		return new Delay();
+		return new Delayer();
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
