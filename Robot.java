@@ -5,9 +5,10 @@
 
 public class Robot {
 	private static final int INTERVAL = 30;
-	private final static int OBSTACLE_DISTANCE_THRESHOLD = 12;
+	private final static int OBSTACLE_DETECTION_RANGE = 12;
 
 	private static boolean debugMode = false;
+
 	/**
 	 * Output to console if debug mode is on
 	 * @param message String Message to display
@@ -88,19 +89,24 @@ public class Robot {
 	 */
 	public static void celebrate() throws InterruptedException {
 		debugLog("> Starting victory sequence...");
+
 		RobotControl.setBaseSpeed(900);
 		RobotControl.goHardRight();
 		Thread.sleep(2500);
+
 		RobotControl.stop();
 		Thread.sleep(500);
-		fanfare(100);			
+
+		fanfare(100);
 	}
 	/**
 	 * Determines whether the robot has reached the spot (end goal) or not
 	 * @return Returns true if robot has reached spot
 	 */
 	public static boolean reachedSpot() {
-		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD + 5);
+		// Need to ensure that there are no objects in range, preventing a false positive that can occur when turning at corners.
+		// + 5 is used because this needs to be checked before the robot gets to the turning point
+		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE + 5);
 	}
 
 	/**
@@ -112,7 +118,7 @@ public class Robot {
 		// Near is used to prevent false positive of spot being detected when turning at corners
 		while (!reachedSpot()) {
 
-			if (RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD)) {
+			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
 				debugLog(">> Detected obstacle!");
 				RobotControl.goHardLeft();
 				blockExecutionUntilOnLine();
