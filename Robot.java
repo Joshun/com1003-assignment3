@@ -44,8 +44,8 @@ public class Robot {
 	public static void blockExecutionUntilOnLine() throws InterruptedException {
 		boolean hasComeOffLine = false;
 
-		while( !hasComeOffLine || !RobotControl.blackDetectedEither() ) {
-			if(! RobotControl.blackDetectedEither() ) {
+		while (!hasComeOffLine || !RobotControl.blackDetectedEither()) {
+			if (!RobotControl.blackDetectedEither()) {
 				hasComeOffLine = true;
 			}
 			Thread.sleep(INTERVAL);
@@ -59,13 +59,13 @@ public class Robot {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
-		if( leftSensorDetect && ! rightSensorDetect) {
+		if (leftSensorDetect && ! rightSensorDetect) {
 			RobotControl.goLeft();
 		}
-		if( !leftSensorDetect && rightSensorDetect ) {
+		if (!leftSensorDetect && rightSensorDetect) {
 			RobotControl.goRight();
 		}
-		if( !leftSensorDetect && !rightSensorDetect ) {
+		if (!leftSensorDetect && !rightSensorDetect) {
 			RobotControl.goForward();
 		}
 	}
@@ -77,7 +77,7 @@ public class Robot {
 	public static void fanfare(int noteLength) throws InterruptedException {
 		int[] beepValues = {261, 261, 261, 329, 261, 329, 783};
 		for (int beepValue : beepValues) {
-			RobotControl.beep(noteLength, beepValues[i]);
+			RobotControl.beep(noteLength, beepValue);
 			Thread.sleep(noteLength);
 		}
 	}
@@ -87,7 +87,7 @@ public class Robot {
 	 */
 	public static void celebrate() throws InterruptedException {
 		RobotControl.stop();
-		System.out.println("> Starting victory sequence...");
+		debugLog("> Starting victory sequence...");
 		RobotControl.setBaseSpeed(900);
 		RobotControl.goHardRight();
 		Thread.sleep(2500);
@@ -95,19 +95,24 @@ public class Robot {
 		Thread.sleep(500);
 		fanfare(100);			
 	}
+	/**
+	 * Determines whether the robot has reached the spot (end goal) or not
+	 * @return Returns true if robot has reached spot
+	 */
+	public static boolean reachedSpot() {
+		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD + 5);
+	}
 
 	/**
 	 * Main algorithm for guiding the robot from start position to the spot
 	 */
 	public static void navigateToSpot() throws InterruptedException {
 		debugLog("> Navigating to spot...");
-		while(true) {
+		// Keep navigating to spot until both sensors detect black and no obstacles are near it. 'Near' means in range of an object as opposed to right next to it.
+		// Near is used to prevent false positive of spot being detected when turning at corners
+		while (!reachedSpot()) {
 
-			if(RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD + 5)) {
-				break;
-			}
-
-			if( RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD) ) {
+			if (RobotControl.obstacleDetected(OBSTACLE_DISTANCE_THRESHOLD)) {
 				debugLog(">> Detected obstacle!");
 				RobotControl.goHardLeft();
 				blockExecutionUntilOnLine();
@@ -121,21 +126,28 @@ public class Robot {
 		debugLog(">> Found spot.");
 		RobotControl.goForward();
 	}
-	
-	public static void main(String[] args) throws InterruptedException {
 
-		RobotControl.initialise();
-		if( args.length == 1) {
-			if( args[0].equals("-d") ) {
+	/**
+	 * Set up program based on input from command-line flags (for debug and stopping)
+	 * @param args String Command-line arguments (passed in from main)
+	 */
+	public static void setUpFlags(String[] args) {
+		if (args.length == 1) {
+			if (args[0].equals("-d")) {
 				debugMode = true;
 				debugLog("Debug Mode");
 			}
-			else if( args[0].equals("-s") ) {
+			else if (args[0].equals("-s")) {
 				System.out.println("Stopping robot...");
 				RobotControl.stop();
 				return;
 			}
 		}
+	}
+	
+	public static void main(String[] args) throws InterruptedException {
+		RobotControl.initialise();
+		setUpFlags(args);
 
 		RobotControl.stop();
 		RobotControl.setBaseSpeed(150);
