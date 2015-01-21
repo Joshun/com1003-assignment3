@@ -94,8 +94,7 @@ public class Robot {
 	public static void celebrate() throws InterruptedException {
 		debugLog("> Starting victory sequence...");
 
-		RobotControl.setBaseSpeed(900);
-		RobotControl.goHardRight();
+		RobotControl.goHardRight(900);
 		Thread.sleep(2500);
 
 		RobotControl.stop();
