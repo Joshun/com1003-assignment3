@@ -171,6 +171,7 @@ public class Robot {
 		RobotControl.stop().wait(2000);
 
 		lineUpStart();
+		
 		navigateToSpot();
 		RobotControl.stop();	
 
