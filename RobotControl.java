@@ -164,7 +164,8 @@ public class RobotControl {
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 */
 	public static void goLeft(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+		// 
+		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
@@ -183,7 +184,7 @@ public class RobotControl {
 	 */
 	public static void goRight(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor == 0 ? speedFactor);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 	}
