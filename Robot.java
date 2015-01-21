@@ -135,6 +135,8 @@ public class Robot {
 		}
 		debugLog(">> Found spot.");
 		RobotControl.goForward();
+		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
+		Thread.sleep(1800);
 	}
 
 	/**
@@ -170,10 +172,8 @@ public class Robot {
 
 		lineUpStart();
 		navigateToSpot();
+		RobotControl.stop();	
 
-		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
-		Thread.sleep(1800);
-		RobotControl.stop();		
 		celebrate();
 
 		debugLog("> Finished!");
