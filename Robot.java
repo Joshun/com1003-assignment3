@@ -79,7 +79,7 @@ public class Robot {
 	}
 
 	/**
-	 * Plays a musical fanfare tune in the ending sequence
+	 * Plays a musical fanfare tune (blocking - holds up further execution)
 	 * @param noteLength int Duration of each note in milliseconds
 	 */
 	public static void fanfare(int noteLength) throws InterruptedException {

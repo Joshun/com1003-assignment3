@@ -116,6 +116,7 @@ public class RobotControl {
 	 * Makes a beep sound for a given duration
 	 * @param duration int Length of beep in milliseconds
 	 * @param hz int Beep frequency in hertz
+	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 
 	public static Delayer beep(int duration, int hz)
@@ -137,6 +138,7 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to move forward
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goForward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
@@ -149,6 +151,7 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to move backward
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goBackward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
@@ -161,6 +164,7 @@ public class RobotControl {
 
 	/**
 	 * Instruct the robot to stop all movement
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer stop() {
 		MOTOR_LEFT.stop();
@@ -172,6 +176,7 @@ public class RobotControl {
 	/**
 	 * Instruct robot to turn left
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeft(int speedFactor) {
 		// 
@@ -189,6 +194,7 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn left using the default speed ratio
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeft() {
 		goLeft(DEFAULT_SPEED_FACTOR);
@@ -198,6 +204,7 @@ public class RobotControl {
 	/**
 	 * Instruct robot to turn right
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRight(int speedFactor) {
 
@@ -215,6 +222,7 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn right using the default speed ratio
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRight() {
 		goRight(DEFAULT_SPEED_FACTOR);
@@ -224,6 +232,7 @@ public class RobotControl {
 	/**
 	 * Instruct the robot to spin left on the spot
 	 * @param speed int Speed for turning left
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goHardLeft(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
@@ -236,6 +245,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goHardLeft() {
 		goHardLeft(baseSpeed);
@@ -246,6 +256,7 @@ public class RobotControl {
 	/**
 	 * Instruct the robot to spin right on the spot
 	 * @param speed int Speed for turning right
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goHardRight(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
@@ -258,6 +269,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goHardRight() {
 		goHardRight(baseSpeed);
@@ -290,7 +302,7 @@ public class RobotControl {
 		RobotControl.goRight(4);
 		Thread.sleep(delayBetweenTests);
 
-		System.out.println("Robot is turning right slowly");
+		System.out.println("Robot is turning left slowly");
 		RobotControl.goLeft(4);
 		Thread.sleep(delayBetweenTests);
 
