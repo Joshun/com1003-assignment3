@@ -283,39 +283,39 @@ public class RobotControl {
 		RobotControl.goRightTurnOnSpot().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left on spot");
-		RobotControl.goLeftTurnOnSpot();.waitFor(delayBetweenTests);
+		RobotControl.goLeftTurnOnSpot().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning right");
-		RobotControl.goRight();.waitFor(delayBetweenTests);
+		RobotControl.goRight().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left");
-		RobotControl.goLeft();.waitFor(delayBetweenTests);
+		RobotControl.goLeft().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning right slowly");
-		RobotControl.goRight(4);.waitFor(delayBetweenTests);
+		RobotControl.goRight(4).waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left slowly");
-		RobotControl.goLeft(4);.waitFor(delayBetweenTests);
+		RobotControl.goLeft(4).waitFor(delayBetweenTests);
 
 		System.out.println("Robot is going forwards");
-		RobotControl.goForward();.waitFor(delayBetweenTests);
+		RobotControl.goForward().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is going backwards");
-		RobotControl.goBackward();.waitFor(delayBetweenTests);
+		RobotControl.goBackward().waitFor(delayBetweenTests);
 
 		System.out.println("Base speed changed to 300");
 		RobotControl.setBaseSpeed(300);
 
 		System.out.println("Robot is going forwards");
-		RobotControl.goForward();.waitFor(delayBetweenTests);
+		RobotControl.goForward().waitFor(delayBetweenTests);
 
 		System.out.println("Robot has stopped");
 		RobotControl.stop();
 
 		System.out.println("Robot is beeping");
-		RobotControl.beep(delayBetweenTests);.waitFor(delayBetweenTests);
+		RobotControl.beep(delayBetweenTests).waitFor(delayBetweenTests);
 
-		System.out.println("Testing obstacle detection in 2 seconds");.waitFor(delayBetweenTests);
+		System.out.println("Testing obstacle detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
 
