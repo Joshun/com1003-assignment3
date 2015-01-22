@@ -155,7 +155,6 @@ public class Robot {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-
 		RobotControl.initialise();
 		setUpFlags(args);
 
@@ -170,7 +169,7 @@ public class Robot {
 		navigateToSpot();
 
 		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
-		RobotControl.goForward().waitFor(1800);
+		RobotControl.goForward().waitFor(1850);
 		RobotControl.stop();
 
 		celebrate();

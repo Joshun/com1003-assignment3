@@ -84,7 +84,6 @@ public class RobotControl {
 	 * @return boolean Returns true if left sensor detects black
 	 */
 	public static boolean blackDetectedLeft() {
-		// System.out.println("Left sensor: " + lightSensorLeft.getLightValue() + " " + (lightSensorLeft.getLightValue() < LEFT_LIGHT_THRESHOLD));
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
 	}
 
