@@ -66,7 +66,7 @@ public class Robot {
 	/**
 	 * Ensures the robot remains on the line by moving it left or right accordingly
 	 */
-	public static void alignWithLine() throws InterruptedException {
+	public static void moveAlongLine() throws InterruptedException {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
@@ -129,7 +129,7 @@ public class Robot {
 				blockExecutionUntilOnLine();
 			}
 			else {
-				alignWithLine();
+				moveAlongLine();
 			}
 			CPU_REST.apply();
 		}
@@ -170,10 +170,9 @@ public class Robot {
 		RobotControl.stop().waitFor(2000);
 
 		lineUpStart();
-
 		navigateToSpot();
-		RobotControl.stop();	
 
+		RobotControl.stop();	
 		celebrate();
 
 		debugLog("> Finished!");
