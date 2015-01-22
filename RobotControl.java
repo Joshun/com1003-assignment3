@@ -188,11 +188,11 @@ public class RobotControl {
 			MOTOR_RIGHT.setSpeed(baseSpeed);
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
-			return new Delayer();
 		}
 		else {
-			return goLeft();
+			goLeft();
 		}
+		return new Delayer();
 	}
 
 	/**
@@ -215,11 +215,11 @@ public class RobotControl {
 			MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
-			return new Delayer();
 		}
 		else {
-			return goRight();
+			goRight();
 		}
+		return new Delayer();
 	}
 
 	/**
