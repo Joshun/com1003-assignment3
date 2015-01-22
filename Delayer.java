@@ -22,8 +22,14 @@ public class Delayer {
 
   public static void main(String[] args) throws InterruptedException {
     System.out.println("Message should print in 2 seconds");
+    
     Delayer d = new Delayer();
     d.waitFor(2000);
+    System.out.println("Hello World!");
+    
+    System.out.println("Message should print in 3 seconds");
+    Delayer d2 = new Delayer(3000);
+    d2.apply();
     System.out.println("Hello World!");
   }
 }
