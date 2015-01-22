@@ -1,29 +1,56 @@
 public class Delayer {
-  public int duration = 0;
+	private int duration;
 
-  public Delayer() { }
+	/**
+	 * Constructs a new Delayer with a given duration
+	 * @param  duration int Duration of delay (in milliseconds)
+	 */
+	public Delayer(int duration) {
+		this.duration = duration;
+	}
 
-  public Delayer(int duration) {
-    this.duration = duration;
-  }
+	/**
+	 * Constructs a new delay with a default duration
+	 */
+	public Delayer() {
+		this(0);
+	}
 
-  public void setDuration(int duration) {
-    this.duration = duration;
-  }
+	/**
+	 * Changes duration of delay
+	 * @param duration int Duration of delay (in milliseconds)
+	 */
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 
-  // useful for chaining
-  public void waitFor(int duration) throws InterruptedException {
-    Thread.sleep(duration);
-  }
+	/**
+	 * Returns duration Delayer has been set to
+	 * @return int Delay
+	 */
+	public int getDuration() {
+		return duration;
+	}
 
-  public void apply() throws InterruptedException {
-    Thread.sleep(duration);
-  }
+	/**
+	 * Used for a one-off delay
+	 * @param duration int Duration of delay (in milliseconds)
+	 */
+	public void waitFor(int duration) throws InterruptedException {
+		Thread.sleep(duration);
+	}
 
-  public static void main(String[] args) throws InterruptedException {
-    System.out.println("Message should print in 2 seconds");
-    Delayer d = new Delayer();
-    d.waitFor(2000);
-    System.out.println("Hello World!");
-  }
+	/**
+	 * Used to apply the duration that has been previously set
+	 */
+	public void apply() throws InterruptedException {
+		Thread.sleep(duration);
+	}
+
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("Message should print in 2 seconds");
+		Delayer d = new Delayer();
+		d.waitFor(2000);
+		System.out.println("Hello World!");
+	}
 }
