@@ -2,3 +2,4 @@ icommand.properties
 *.bat
 *.class
 doc
+*~

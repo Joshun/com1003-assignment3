@@ -52,7 +52,11 @@ public class RobotControl {
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
 		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
 		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
-	}	
+	}
+
+	public static void closeConnection() {
+		NTXCommand.close();
+	}
 
 	/**
 	 * Set the robot's base speed for all movement
