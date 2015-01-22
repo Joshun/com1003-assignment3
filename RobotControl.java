@@ -90,7 +90,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the left light sensor detects black
-	 * @return boolean Returns <code>true</code> if left sensor detects black
+	 * @return boolean Returns true if left sensor detects black
 	 */
 	public static boolean blackDetectedLeft() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
@@ -98,7 +98,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the right light sensor detects black
-	 * @return boolean Returns <code>true</code> if right sensor detects black
+	 * @return boolean Returns true if right sensor detects black
 	 */
 	public static boolean blackDetectedRight() {
 		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
@@ -106,7 +106,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method determining whether either sensor detects black
-	 * @return boolean Returns <code>true</code> if either sensors detects black
+	 * @return boolean Returns true if either sensors detects black
 	 */
 	public static boolean blackDetectedEither() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) || blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
@@ -150,7 +150,14 @@ public class RobotControl {
 		return beep(duration, DEFAULT_BEEP_FREQ);
 	}
 
-	// TODO: Add javadoc here
+
+	/**
+	 * Instruct robot to move forward at a given speed
+	 * @param  speed int Speed of forward movement (degrees per second)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
+	 */
+
+	// Instruct robot to move forward at a given speed
 	public static Delayer goForward(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
@@ -160,14 +167,18 @@ public class RobotControl {
 	}
 
 	/**
-	 * Instruct robot to move forward at the base speed
+	 * Instruct robot to move forward at the base speed (degrees per second)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goForward() {
 		return goForward(baseSpeed);
 	}
 
-	// TODO: Add javadoc here
+	/**
+	 * Instruct robot to move backward at a given speed
+	 * @param  speed int Speed of backward movement (degrees per second)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
+	 */
 	public static Delayer goBackward(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
