@@ -15,20 +15,20 @@ public class RobotControl {
 	// Default frequency used for beeping
 	private static final int DEFAULT_BEEP_FREQ = 500;
 
-	private final static Motor MOTOR_LEFT = Motor.C;
-	private final static Motor MOTOR_RIGHT = Motor.B;
+	private static final Motor MOTOR_LEFT = Motor.C;
+	private static final Motor MOTOR_RIGHT = Motor.B;
 
 	// Light threshold values for both sensors (maximum brightness by which black is detected),
 	// callibrated specifically for our robot's sensors
-	private final static int LEFT_LIGHT_THRESHOLD = 520;
-	private final static int RIGHT_LIGHT_THESHOLD = 570;
+	private static final int LEFT_LIGHT_THRESHOLD = 520;
+	private static final int RIGHT_LIGHT_THESHOLD = 570;
 	
 	// SensorPort for Light Sensor
-	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
-	private final static SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
+	private static final SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
+	private static final SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
 	
 	// SensorPort for Ultrasonic Sensor
-	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
+	private static final SensorPort U_SENSOR_PORT = SensorPort.S4;
 	
 	// Lightsensor objects
 	private static LightSensor lightSensorLeft;
