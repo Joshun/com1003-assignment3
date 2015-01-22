@@ -140,8 +140,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 	public static Delayer beep(int duration) {
-		beep(duration, 500);
-		return new Delayer();
+		return beep(duration, 500);
 	}
 
 	/**
@@ -153,7 +152,6 @@ public class RobotControl {
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
-
 		return new Delayer();
 	}
 
@@ -166,7 +164,6 @@ public class RobotControl {
 		MOTOR_RIGHT.setSpeed(baseSpeed);		
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
-
 		return new Delayer();
 	}
 
@@ -177,7 +174,6 @@ public class RobotControl {
 	public static Delayer stop() {
 		MOTOR_LEFT.stop();
 		MOTOR_RIGHT.stop();
-
 		return new Delayer();
 	}
 
@@ -284,99 +280,79 @@ public class RobotControl {
 		int delayBetweenTests = 2000;
 
 		System.out.println("Robot is turning right on spot");
-		RobotControl.goRightTurnOnSpot();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goRightTurnOnSpot().waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left on spot");
-		RobotControl.goLeftTurnOnSpot();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goLeftTurnOnSpot();.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning right");
-		RobotControl.goRight();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goRight();.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left");
-		RobotControl.goLeft();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goLeft();.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning right slowly");
-		RobotControl.goRight(4);
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goRight(4);.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is turning left slowly");
-		RobotControl.goLeft(4);
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goLeft(4);.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is going forwards");
-		RobotControl.goForward();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goForward();.waitFor(delayBetweenTests);
 
 		System.out.println("Robot is going backwards");
-		RobotControl.goBackward();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goBackward();.waitFor(delayBetweenTests);
 
 		System.out.println("Base speed changed to 300");
 		RobotControl.setBaseSpeed(300);
 
 		System.out.println("Robot is going forwards");
-		RobotControl.goForward();
-		Thread.sleep(delayBetweenTests);
+		RobotControl.goForward();.waitFor(delayBetweenTests);
 
 		System.out.println("Robot has stopped");
 		RobotControl.stop();
 
 		System.out.println("Robot is beeping");
-		RobotControl.beep(delayBetweenTests);
-		Thread.sleep(delayBetweenTests);
+		RobotControl.beep(delayBetweenTests);.waitFor(delayBetweenTests);
 
-		System.out.println("Testing obstacle detection in 2 seconds");
+		System.out.println("Testing obstacle detection in 2 seconds");.waitFor(delayBetweenTests);
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing obstacle detection again in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing left sensor black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing left sensor black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);		
 
 		System.out.println("Testing right sensor black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing right sensor black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing both sensors black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing both sensors black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing either sensors black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing either sensors black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
-		Thread.sleep(delayBetweenTests);
 	}
 }
