@@ -1,4 +1,5 @@
-\documentclass{article}
+\documentclass[a4paper]{report}
+\usepackage{titling}
 \usepackage{lipsum}
 \usepackage{parskip}
 
@@ -15,21 +16,40 @@
   \end{tabular}%
 }
 
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
 \begin{document}
+
+\title{Lego Robot Assignment}
+\subtitle{COM1003}
+\date{\today}
+\author{Jack Deadman\\ Joshua O'Leary}
+	
+\maketitle
 
 \section*{Statement of Contribution}
 
-\lipsum[1]
+The majority of the code was produced by pair programming, however we each focussed on some areas more than others:
 
+\begin{minipage}{8cm}
+
+\end{minipage}
+
+I focussed on algorithm for turning at corners (when detecting an obstacle), in addition to improving the overall structure of the code.
 \begin{figure}[h]
 	\begin{minipage}[c]{0.4\linewidth}
-    		\sign{Mr Jack Deadman}
-    		\Date
-	\end{minipage}	
-\end{figure}
-	
+    	\sign{Mr Jack Deadman}
+    	\Date
+	\end{minipage}
 
-\lipsum[5]
+\end{figure}
+
+I focussed on the functions directing the robot's movement, in addition to the functions for obstacle and black detection.
 \begin{figure}[h]
 	\begin{minipage}[c]{0.4\linewidth}
 		\sign{Mr Joshua O'Leary}
