@@ -19,11 +19,11 @@ public class Robot {
 
 	/**
 	 * Output to console if debug mode is on
-	 * @param message String Message to display
+	 * @param object Object Object to display
 	 */
-	public static void debugLog(Object obj) {
+	public static void debugLog(Object object) {
 		if (debugMode) {
-			System.out.println(obj);
+			System.out.println(object);
 		}
 	}
 
