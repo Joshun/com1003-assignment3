@@ -1,5 +1,7 @@
 /**
- * Wrapper class for abstracting the NXT icommand api
+ * Wrapper class for abstracting the NXT icommand api which has been configured and 
+ * calibrated to work with the way the robot has been setup
+ * 
  * @author Jack Deadman
  * @author Joshua O'Leary
  */
@@ -50,7 +52,11 @@ public class RobotControl {
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
 		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
 		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
-	}	
+	}
+
+	public static void closeConnection() {
+		NTXCommand.close();
+	}
 
 	/**
 	 * Set the robot's base speed for all movement
@@ -122,7 +128,6 @@ public class RobotControl {
 	public static Delayer beep(int duration, int hz)
 	{
 		Sound.playTone(hz, duration);
-
 		return new Delayer();
 	}
 
@@ -132,7 +137,6 @@ public class RobotControl {
 	 */
 	public static Delayer beep(int duration) {
 		beep(duration, 500);
-
 		return new Delayer();
 	}
 
@@ -234,7 +238,7 @@ public class RobotControl {
 	 * @param speed int Speed for turning left
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardLeft(int speed) {
+	public static Delayer goLeftTurnOnSpot(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.backward();
@@ -247,9 +251,8 @@ public class RobotControl {
 	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardLeft() {
-		goHardLeft(baseSpeed);
-
+	public static Delayer goLeftTurnOnSpot() {
+		goLeftTurnOnSpot(baseSpeed);
 		return new Delayer();
 	}
 
@@ -258,7 +261,7 @@ public class RobotControl {
 	 * @param speed int Speed for turning right
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardRight(int speed) {
+	public static Delayer goRightTurnOnSpot(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.forward();
@@ -271,9 +274,8 @@ public class RobotControl {
 	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardRight() {
-		goHardRight(baseSpeed);
-
+	public static Delayer goRightTurnOnSpot() {
+		goRightTurnOnSpot(baseSpeed);
 		return new Delayer();
 	}
 
@@ -282,12 +284,12 @@ public class RobotControl {
 		RobotControl.initialise();
 		int delayBetweenTests = 2000;
 
-		System.out.println("Robot is turning hard right");
-		RobotControl.goHardRight();
+		System.out.println("Robot is turning right on spot");
+		RobotControl.goRightTurnOnSpot();
 		Thread.sleep(delayBetweenTests);
 
-		System.out.println("Robot is turning hard left");
-		RobotControl.goHardLeft();
+		System.out.println("Robot is turning left on spot");
+		RobotControl.goLeftTurnOnSpot();
 		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning right");

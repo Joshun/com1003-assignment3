@@ -1,4 +1,10 @@
-public class Delayer {
+/**
+ * Object handle blocking the program from executing for a given time
+ * 
+ * @author Jack Deadman
+ * @author Joshua O'Leary
+ */
+
 	private int duration;
 
 	/**
