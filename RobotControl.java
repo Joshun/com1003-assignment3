@@ -1,5 +1,7 @@
 /**
- * Wrapper class for abstracting the NXT icommand api
+ * Wrapper class for abstracting the NXT icommand api which has been configured and 
+ * calibrated to work with the way the robot has been setup
+ * 
  * @author Jack Deadman
  * @author Joshua O'Leary
  */
@@ -122,7 +124,6 @@ public class RobotControl {
 	public static Delayer beep(int duration, int hz)
 	{
 		Sound.playTone(hz, duration);
-
 		return new Delayer();
 	}
 
@@ -132,7 +133,6 @@ public class RobotControl {
 	 */
 	public static Delayer beep(int duration) {
 		beep(duration, 500);
-
 		return new Delayer();
 	}
 
@@ -249,7 +249,6 @@ public class RobotControl {
 	 */
 	public static Delayer goLeftTurnOnSpot() {
 		goHardLeft(baseSpeed);
-
 		return new Delayer();
 	}
 
@@ -273,7 +272,6 @@ public class RobotControl {
 	 */
 	public static Delayer goRightTurnOnSpot() {
 		goHardRight(baseSpeed);
-
 		return new Delayer();
 	}
 
