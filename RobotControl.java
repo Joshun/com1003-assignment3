@@ -139,7 +139,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 	public static Delayer beep(int duration) {
-		return beep(duration, 500);
+		return beep(duration, DEFAULT_BEEP_FREQ);
 	}
 
 	/**
