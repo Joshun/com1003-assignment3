@@ -234,7 +234,7 @@ public class RobotControl {
 	 * @param speed int Speed for turning left
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardLeft(int speed) {
+	public static Delayer goLeftTurnOnSpot(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.backward();
@@ -247,7 +247,7 @@ public class RobotControl {
 	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardLeft() {
+	public static Delayer goLeftTurnOnSpot() {
 		goHardLeft(baseSpeed);
 
 		return new Delayer();
@@ -258,7 +258,7 @@ public class RobotControl {
 	 * @param speed int Speed for turning right
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardRight(int speed) {
+	public static Delayer goRightTurnOnSpot(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.forward();
@@ -271,7 +271,7 @@ public class RobotControl {
 	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goHardRight() {
+	public static Delayer goRightTurnOnSpot() {
 		goHardRight(baseSpeed);
 
 		return new Delayer();

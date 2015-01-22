@@ -96,7 +96,7 @@ public class Robot {
 	public static void celebrate() throws InterruptedException {
 		debugLog("> Starting victory sequence...");
 
-		RobotControl.goHardRight(900).waitFor(2500);
+		RobotControl.goRightTurnOnSpot(900).waitFor(2500);
 		RobotControl.stop().waitFor(500);
 
 		fanfare(100);
@@ -122,7 +122,7 @@ public class Robot {
 		while (!reachedSpot()) {
 			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
 				debugLog(">> Detected obstacle!");
-				RobotControl.goHardLeft();
+				RobotControl.goLeftTurnOnSpot();
 				blockExecutionUntilOnLine();
 			}
 			else {
