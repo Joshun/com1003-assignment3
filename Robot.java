@@ -168,7 +168,7 @@ public class Robot {
 		lineUpStart();
 		navigateToSpot();
 
-		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
+		// Wait for 1.85 seconds to give robot time to move onto spot before calling ending sequence
 		RobotControl.goForward().waitFor(1850);
 		RobotControl.stop();
 
