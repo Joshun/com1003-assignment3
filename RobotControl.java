@@ -354,5 +354,7 @@ public class RobotControl {
 		System.out.println("Testing either sensors black detection in 2 seconds");
 		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
+
+		RobotControl.closeConnection();
 	}
 }
