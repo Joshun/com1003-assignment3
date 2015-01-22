@@ -151,6 +151,11 @@ public class Robot {
 				RobotControl.stop();
 				System.exit(0);
 			}
+			else if (args[0].equals("-h")) {
+				System.out.println("-d\tDebug Mode");
+				System.out.println("-s\tStop the robot");
+				System.exit(0);
+			}
 		}
 	}
 	
