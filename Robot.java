@@ -141,19 +141,24 @@ public class Robot {
 	 */
 	public static void setUpFlags(String[] args) {
 		if (args.length == 1) {
+			String flag = args[0];
 			// Outputs debugging information if -d flag is used when calling the program
-			if (args[0].equals("-d")) {
-				debugMode = true;
-				debugLog("Debug Mode");
+			if (flag.equals("-d")) {
+				// debugMode = true;
+				// debugLog("Debug Mode");
 			}
-			else if (args[0].equals("-s")) {
+			else if (flag.equals("-s")) {
 				System.out.println("Stopping robot...");
-				RobotControl.stop();
+				// RobotControl.stop();
 				System.exit(0);
 			}
-			else if (args[0].equals("-h")) {
+			else if (flag.equals("-h")) {
 				System.out.println("-d\tDebug Mode");
 				System.out.println("-s\tStop the robot");
+				System.exit(0);
+			}
+			else {
+				System.out.println("Invalid flag: " + flag);
 				System.exit(0);
 			}
 		}
