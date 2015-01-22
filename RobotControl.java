@@ -55,7 +55,7 @@ public class RobotControl {
 	}
 
 	public static void closeConnection() {
-		NTXCommand.close();
+		NXTCommand.close();
 	}
 
 	/**
