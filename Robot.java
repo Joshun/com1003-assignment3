@@ -70,7 +70,7 @@ public class Robot {
 		boolean leftSensorDetect = RobotControl.blackDetectedLeft();
 		boolean rightSensorDetect = RobotControl.blackDetectedRight();
 
-		if (leftSensorDetect && ! rightSensorDetect) {
+		if (leftSensorDetect && !rightSensorDetect) {
 			RobotControl.goLeft();
 		}
 		else if (!leftSensorDetect && rightSensorDetect) {
