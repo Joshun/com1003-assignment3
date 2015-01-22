@@ -70,6 +70,14 @@ public class RobotControl {
 	}
 
 	/**
+	 * Get the robot's base speed for all movement
+	 * @retuns int Returns the Robot's base speed
+	 */
+	public static int getBaseSpeed() {
+		return baseSpeed;
+	}
+
+	/**
 	 * Base method for determining whether a light sensor detects black within a given threshold
 	 * @param lsensor LightSensor NXT LightSensor
 	 * @param threshold int Highest value for which black is still detected
@@ -81,7 +89,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the left light sensor detects black
-	 * @return boolean Returns true if left sensor detects black
+	 * @return boolean Returns <code>true</code> if left sensor detects black
 	 */
 	public static boolean blackDetectedLeft() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
@@ -89,7 +97,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the right light sensor detects black
-	 * @return boolean Returns true if right sensor detects black
+	 * @return boolean Returns <code>true</code> if right sensor detects black
 	 */
 	public static boolean blackDetectedRight() {
 		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
@@ -97,7 +105,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method determining whether either sensor detects black
-	 * @return boolean Returns true if either sensors detects black
+	 * @return boolean Returns <code>true</code> if either sensors detects black
 	 */
 	public static boolean blackDetectedEither() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) || blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
@@ -127,8 +135,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 
-	public static Delayer beep(int duration, int hz)
-	{
+	public static Delayer beep(int duration, int hz) {
 		Sound.playTone(hz, duration);
 		return new Delayer();
 	}
@@ -142,28 +149,37 @@ public class RobotControl {
 		return beep(duration, DEFAULT_BEEP_FREQ);
 	}
 
-	/**
-	 * Instruct robot to move forward
-	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
-	 */
-	public static Delayer goForward(){
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
+	// TODO: Add javadoc here
+	public static Delayer goForward(speed) {
+		MOTOR_LEFT.setSpeed(speed);
+		MOTOR_RIGHT.setSpeed(speed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 		return new Delayer();
 	}
 
 	/**
-	 * Instruct robot to move backward
+	 * Instruct robot to move forward at the base speed
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goBackward(){
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed);		
+	public static Delayer goForward() {
+		return goForward(baseSpeed);
+	}
+
+	public static Delayer goBackward(speed) {
+		MOTOR_LEFT.setSpeed(speed);
+		MOTOR_RIGHT.setSpeed(speed);
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
 		return new Delayer();
+	}
+
+	/**
+	 * Instruct robot to move backward at the baseSpeed
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
+	 */
+	public static Delayer goBackward() {
+		return goBackward(baseSpeed);
 	}
 
 	/**
@@ -273,7 +289,7 @@ public class RobotControl {
 		return goRightTurnOnSpot(baseSpeed);
 	}
 
-	public static void main(String[] args)  throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException {
 		// Test harness 
 		RobotControl.initialise();
 		int delayBetweenTests = 2000;
