@@ -58,7 +58,7 @@ public class Delayer {
 		// Test harness
 		System.out.println("Message should print in 2 seconds");
 
-		Delayer d = new Delayer();
+		Delayer d1 = new Delayer();
 		d1.waitFor(2000);
 		System.out.println("Hello World!");
 
