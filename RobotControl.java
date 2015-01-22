@@ -2,7 +2,7 @@ import icommand.nxt.*;
 import icommand.nxt.comm.NXTCommand;
 
 /**
- * Controller class for abstracting from NXT icommand library, configured specifically for our robot's
+ * Wrapper class for abstracting from NXT icommand library, configured specifically for our robot's
  * sensors, object position and callibration
  * 
  * @author Jack Deadman
