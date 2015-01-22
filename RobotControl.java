@@ -187,26 +187,25 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeft(int speedFactor) {
-		// 
+		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour		
 		if(speedFactor > 0) {
 			MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
 			MOTOR_RIGHT.setSpeed(baseSpeed);
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
-		}
-		else {
-			goLeft();
-		}
 			return new Delayer();
 		}
+		else {
+			return goLeft();
+		}
+	}
 
 	/**
 	 * Instruct robot to turn left using the default speed ratio
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeft() {
-		goLeft(DEFAULT_SPEED_FACTOR);
-		return new Delayer();
+		return goLeft(DEFAULT_SPEED_FACTOR);
 	}
 
 	/**
@@ -215,17 +214,17 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRight(int speedFactor) {
-
+		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour
 		if(speedFactor > 0) {
 			MOTOR_LEFT.setSpeed(baseSpeed);
 			MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
+			return new Delayer();
 		}
 		else {
-			goRight();
+			return goRight();
 		}
-		return new Delayer();
 	}
 
 	/**
@@ -233,8 +232,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRight() {
-		goRight(DEFAULT_SPEED_FACTOR);
-		return new Delayer();
+		return goRight(DEFAULT_SPEED_FACTOR);
 	}
 
 	/**
@@ -243,11 +241,11 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeftTurnOnSpot(int speed) {
+		// Division by two gives a more desirable turning speed relative to the base speed
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.forward();
-
 		return new Delayer();
 	}
 
@@ -256,8 +254,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeftTurnOnSpot() {
-		goLeftTurnOnSpot(baseSpeed);
-		return new Delayer();
+		return goLeftTurnOnSpot(baseSpeed);
 	}
 
 	/**
@@ -270,7 +267,6 @@ public class RobotControl {
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
-
 		return new Delayer();
 	}
 
@@ -279,8 +275,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRightTurnOnSpot() {
-		goRightTurnOnSpot(baseSpeed);
-		return new Delayer();
+		return goRightTurnOnSpot(baseSpeed);
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
