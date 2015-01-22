@@ -5,6 +5,7 @@
  * @author Joshua O'Leary
  */
 
+public class Delayer {
 	private int duration;
 
 	/**
