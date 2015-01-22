@@ -10,9 +10,6 @@ public class Robot {
 	// Maximum distance of object detected before robot turns
 	private final static int OBSTACLE_DETECTION_RANGE = 12;
 
-	// Base speed which the program will run at
-	private final static int BASE_SPEED = 150;
-
 	private static final Delayer CPU_REST = new Delayer(DELAY_BETWEEN_CYCLES);
 
 	// Enables display of debug messages on console output
@@ -134,8 +131,6 @@ public class Robot {
 			CPU_REST.apply();
 		}
 		debugLog(">> Found spot.");
-		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
-		RobotControl.goForward().waitFor(1800);
 	}
 
 	/**
@@ -164,7 +159,7 @@ public class Robot {
 
 		// Stop robot in case already moving from running program previously
 		RobotControl.stop();
-		RobotControl.setBaseSpeed(BASE_SPEED);
+		RobotControl.setBaseSpeed(150);
 
 		navigateToStartLine();
 		RobotControl.stop().waitFor(2000);
@@ -172,7 +167,10 @@ public class Robot {
 		lineUpStart();
 		navigateToSpot();
 
-		RobotControl.stop();	
+		// Wait for 1.8 seconds to give robot time to move onto spot before calling ending sequence
+		RobotControl.goForward().waitFor(1800);
+		RobotControl.stop();
+
 		celebrate();
 
 		debugLog("> Finished!");
