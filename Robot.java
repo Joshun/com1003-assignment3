@@ -28,7 +28,8 @@ public class Robot {
 	}
 
 	/**
-	 * Move robot forward until it reaches the black line
+	 * Move robot forward until it reaches the black line. The program execution is
+	 * blocked until the robot reaches destination
 	 */
 	public static void navigateToStartLine() throws InterruptedException {
 		debugLog("> Moving to start line...");
@@ -38,7 +39,8 @@ public class Robot {
 	}
 
 	/**
-	 * Turns robot until the line is in between its sensors
+	 * Turns robot until the line is in between its sensors. The program execution is
+	 * blocked until the robot is lined up on the line
 	 */
 	public static void lineUpStart() throws InterruptedException {
 		debugLog("> Lining up...");
