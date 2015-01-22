@@ -9,31 +9,35 @@ import icommand.nxt.comm.NXTCommand;
 
 public class RobotControl {
 
+	// Default ratio between wheels when turning (e.g. with a factor of 2, outer wheel is 2x faster than pivot wheel)
 	private static final int DEFAULT_SPEED_FACTOR = 2;
+
+	// Default frequency used for beeping
 	private static final int DEFAULT_BEEP_FREQ = 500;
 
-	private final static Motor MOTOR_LEFT = Motor.C;
-	private final static Motor MOTOR_RIGHT = Motor.B;
+	private static final Motor MOTOR_LEFT = Motor.C;
+	private static final Motor MOTOR_RIGHT = Motor.B;
 
-	// Light threshold values for both sensors
-	private final static int LEFT_LIGHT_THRESHOLD = 520;
-	private final static int RIGHT_LIGHT_THESHOLD = 570;
+	// Light threshold values for both sensors (maximum brightness by which black is detected),
+	// callibrated specifically for our robot's sensors
+	private static final int LEFT_LIGHT_THRESHOLD = 520;
+	private static final int RIGHT_LIGHT_THESHOLD = 570;
 	
 	// SensorPort for Light Sensor
-	private final static SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
-	private final static SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
+	private static final SensorPort L_SENSOR_PORT_LEFT = SensorPort.S2;
+	private static final SensorPort L_SENSOR_PORT_RIGHT = SensorPort.S1;
 	
 	// SensorPort for Ultrasonic Sensor
-	private final static SensorPort U_SENSOR_PORT = SensorPort.S4;
+	private static final SensorPort U_SENSOR_PORT = SensorPort.S4;
 	
-	// Lightsensor object
+	// Lightsensor objects
 	private static LightSensor lightSensorLeft;
 	private static LightSensor lightSensorRight;
 	
 	// Ultrasonic disance sensor object
 	private static UltrasonicSensor objectSensor;
 
-	// "Base" speed
+	// "Base" speed (used by most of the movement functions - all speed is relative to this)
 	private static int baseSpeed = 100;
 
 	/**
@@ -42,6 +46,7 @@ public class RobotControl {
 	public static void initialise() {
 		NXTCommand.open();
 		NXTCommand.setVerify(true);
+		
 		lightSensorLeft = new LightSensor(L_SENSOR_PORT_LEFT);
 		lightSensorRight = new LightSensor(L_SENSOR_PORT_RIGHT);
 		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
@@ -111,219 +116,266 @@ public class RobotControl {
 	 * Makes a beep sound for a given duration
 	 * @param duration int Length of beep in milliseconds
 	 * @param hz int Beep frequency in hertz
+	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 
-	public static void beep(int duration, int hz)
+	public static Delayer beep(int duration, int hz)
 	{
 		Sound.playTone(hz, duration);
+
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method for a default beep sound
 	 * @param duration Length of beep in milliseconds
 	 */
-	public static void beep(int duration) {
+	public static Delayer beep(int duration) {
 		beep(duration, 500);
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to move forward
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goForward(){
+	public static Delayer goForward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to move backward
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goBackward(){
+	public static Delayer goBackward(){
 		MOTOR_LEFT.setSpeed(baseSpeed);
 		MOTOR_RIGHT.setSpeed(baseSpeed);		
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.backward();
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to stop all movement
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void stop() {
+	public static Delayer stop() {
 		MOTOR_LEFT.stop();
 		MOTOR_RIGHT.stop();
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn left
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goLeft(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-	}
+	public static Delayer goLeft(int speedFactor) {
+		// 
+		if(speedFactor > 0) {
+			MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_RIGHT.setSpeed(baseSpeed);
+			MOTOR_LEFT.forward();
+			MOTOR_RIGHT.forward();
+		}
+		else {
+			goLeft();
+		}
+			return new Delayer();
+		}
 
 	/**
 	 * Instruct robot to turn left using the default speed ratio
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goLeft() {
+	public static Delayer goLeft() {
 		goLeft(DEFAULT_SPEED_FACTOR);
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn right
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goRight(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
+	public static Delayer goRight(int speedFactor) {
+
+		if(speedFactor > 0) {
+			MOTOR_LEFT.setSpeed(baseSpeed);
+			MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_LEFT.forward();
+			MOTOR_RIGHT.forward();
+		}
+		else {
+			goRight();
+		}
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct robot to turn right using the default speed ratio
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goRight() {
+	public static Delayer goRight() {
 		goRight(DEFAULT_SPEED_FACTOR);
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to spin left on the spot
 	 * @param speed int Speed for turning left
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goHardLeft(int speed) {
+	public static Delayer goHardLeft(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.backward();
 		MOTOR_RIGHT.forward();
+
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method to instruct the robot to spin left on the spot (using the base speed)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goHardLeft() {
+	public static Delayer goHardLeft() {
 		goHardLeft(baseSpeed);
+
+		return new Delayer();
 	}
 
 	/**
 	 * Instruct the robot to spin right on the spot
 	 * @param speed int Speed for turning right
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goHardRight(int speed) {
+	public static Delayer goHardRight(int speed) {
 		MOTOR_LEFT.setSpeed(speed / 2);
 		MOTOR_RIGHT.setSpeed(speed / 2);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.backward();
+
+		return new Delayer();
 	}
 
 	/**
 	 * Helper method to instruct the robot to spin right on the spot (using the base speed)
+	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static void goHardRight() {
+	public static Delayer goHardRight() {
 		goHardRight(baseSpeed);
+
+		return new Delayer();
 	}
 
 	public static void main(String[] args)  throws InterruptedException {
 		// Test harness 
 		RobotControl.initialise();
-	
+		int delayBetweenTests = 2000;
+
 		System.out.println("Robot is turning hard right");
 		RobotControl.goHardRight();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning hard left");
 		RobotControl.goHardLeft();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning right");
 		RobotControl.goRight();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning left");
 		RobotControl.goLeft();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning right slowly");
 		RobotControl.goRight(4);
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
-		System.out.println("Robot is turning right slowly");
+		System.out.println("Robot is turning left slowly");
 		RobotControl.goLeft(4);
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is going forwards");
 		RobotControl.goForward();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is going backwards");
 		RobotControl.goBackward();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Base speed changed to 300");
 		RobotControl.setBaseSpeed(300);
 
 		System.out.println("Robot is going forwards");
 		RobotControl.goForward();
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot has stopped");
 		RobotControl.stop();
 
 		System.out.println("Robot is beeping");
-		RobotControl.beep(2000);
-		Thread.sleep(2000);
+		RobotControl.beep(delayBetweenTests);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing obstacle detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing obstacle detection again in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.obstacleDetected(10) ? "Detected obstacle" : "No obstacle detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing left sensor black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing left sensor black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedLeft() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);		
+		Thread.sleep(delayBetweenTests);		
 
 		System.out.println("Testing right sensor black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing right sensor black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedRight() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing both sensors black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing both sensors black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedBoth() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing either sensors black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Testing either sensors black detection in 2 seconds");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 		System.out.println(RobotControl.blackDetectedEither() ? "Detected black" : "No black detected");
-		Thread.sleep(2000);
+		Thread.sleep(delayBetweenTests);
 	}
 }
