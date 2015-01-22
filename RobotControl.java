@@ -175,7 +175,8 @@ public class RobotControl {
 	 */
 	public static Delayer goLeft(int speedFactor) {
 		// 
-		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
+		// MOTOR_LEFT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
+		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
 		MOTOR_RIGHT.setSpeed(baseSpeed);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
@@ -198,7 +199,7 @@ public class RobotControl {
 	 */
 	public static Delayer goRight(int speedFactor) {
 		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
+		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
 		MOTOR_LEFT.forward();
 		MOTOR_RIGHT.forward();
 
