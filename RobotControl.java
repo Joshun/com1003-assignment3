@@ -3,7 +3,8 @@ import icommand.nxt.comm.NXTCommand;
 
 /**
  * Wrapper class for abstracting from NXT icommand library, configured specifically for our robot's
- * sensors, object position and callibration
+ * sensors, and callibration. All methods are static as there can only be one connection 
+ * to a robot at a time, so therefore there is no need for the ability of multiple instances.
  * 
  * @author Jack Deadman
  * @author Joshua O'Leary
@@ -150,7 +151,7 @@ public class RobotControl {
 	}
 
 	// TODO: Add javadoc here
-	public static Delayer goForward(speed) {
+	public static Delayer goForward(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
 		MOTOR_LEFT.forward();
@@ -167,7 +168,7 @@ public class RobotControl {
 	}
 
 	// TODO: Add javadoc here
-	public static Delayer goBackward(speed) {
+	public static Delayer goBackward(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
 		MOTOR_LEFT.backward();
