@@ -8,7 +8,7 @@ public class Robot {
 	private static final int DELAY_BETWEEN_CYCLES = 30;
 
 	// Maximum distance of object detected before robot turns
-	private final static int OBSTACLE_DETECTION_RANGE = 12;
+	private static final int OBSTACLE_DETECTION_RANGE = 12;
 
 	private static final Delayer CPU_REST = new Delayer(DELAY_BETWEEN_CYCLES);
 
