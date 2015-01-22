@@ -144,12 +144,12 @@ public class Robot {
 			String flag = args[0];
 			// Outputs debugging information if -d flag is used when calling the program
 			if (flag.equals("-d")) {
-				// debugMode = true;
-				// debugLog("Debug Mode");
+				debugMode = true;
+				debugLog("Debug Mode");
 			}
 			else if (flag.equals("-s")) {
 				System.out.println("Stopping robot...");
-				// RobotControl.stop();
+				RobotControl.stop();
 				System.exit(0);
 			}
 			else if (flag.equals("-h")) {
