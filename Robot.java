@@ -45,7 +45,7 @@ public class Robot {
 	public static void lineUpStart() throws InterruptedException {
 		debugLog("> Lining up...");
 		// Value of '4' ensures robot turns tightly enough to move onto line correctly
-		RobotControl.goRight(4);
+		RobotControl.goRight(4.0);
 		blockExecutionUntilOnLine();
 		debugLog(">> Lined up.");
 	}

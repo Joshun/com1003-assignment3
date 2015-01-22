@@ -13,7 +13,7 @@ import icommand.nxt.comm.NXTCommand;
 public class RobotControl {
 
 	// Default ratio between wheels when turning (e.g. with a factor of 2, outer wheel is 2x faster than pivot wheel)
-	private static final int DEFAULT_SPEED_FACTOR = 2;
+	private static final double DEFAULT_SPEED_FACTOR = 2.0;
 
 	// Default frequency used for beeping
 	private static final int DEFAULT_BEEP_FREQ = 500;
@@ -204,10 +204,10 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn left
-	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @param speedFactor double Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goLeft(int speedFactor) {
+	public static Delayer goLeft(double speedFactor) {
 		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour		
 		if(speedFactor > 0) {
 			MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
@@ -231,10 +231,10 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn right
-	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @param speedFactor double Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goRight(int speedFactor) {
+	public static Delayer goRight(double speedFactor) {
 		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour
 		if(speedFactor > 0) {
 			MOTOR_LEFT.setSpeed(baseSpeed);
