@@ -175,21 +175,23 @@ public class RobotControl {
 	 */
 	public static Delayer goLeft(int speedFactor) {
 		// 
-		// MOTOR_LEFT.setSpeed(baseSpeed / speedFactor == 0 ? 1 : speedFactor);
-		MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_RIGHT.setSpeed(baseSpeed);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
-
-		return new Delayer();
-	}
+		if(speedFactor > 0) {
+			MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_RIGHT.setSpeed(baseSpeed);
+			MOTOR_LEFT.forward();
+			MOTOR_RIGHT.forward();
+		}
+		else {
+			goLeft();
+		}
+			return new Delayer();
+		}
 
 	/**
 	 * Instruct robot to turn left using the default speed ratio
 	 */
 	public static Delayer goLeft() {
 		goLeft(DEFAULT_SPEED_FACTOR);
-
 		return new Delayer();
 	}
 
@@ -198,11 +200,16 @@ public class RobotControl {
 	 * @param speedFactor Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 */
 	public static Delayer goRight(int speedFactor) {
-		MOTOR_LEFT.setSpeed(baseSpeed);
-		MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
-		MOTOR_LEFT.forward();
-		MOTOR_RIGHT.forward();
 
+		if(speedFactor > 0) {
+			MOTOR_LEFT.setSpeed(baseSpeed);
+			MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_LEFT.forward();
+			MOTOR_RIGHT.forward();
+		}
+		else {
+			goRight();
+		}
 		return new Delayer();
 	}
 
@@ -211,7 +218,6 @@ public class RobotControl {
 	 */
 	public static Delayer goRight() {
 		goRight(DEFAULT_SPEED_FACTOR);
-
 		return new Delayer();
 	}
 
