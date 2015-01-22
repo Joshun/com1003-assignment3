@@ -54,7 +54,7 @@ public class Robot {
 	public static void blockExecutionUntilOnLine() throws InterruptedException {
 		boolean hasComeOffLine = false;
 
-		while (!hasComeOffLine || !RobotControl.blackDetectedEither()) {
+		while (!(hasComeOffLine && RobotControl.blackDetectedEither())) {
 			if (!RobotControl.blackDetectedEither()) {
 				hasComeOffLine = true;
 			}
