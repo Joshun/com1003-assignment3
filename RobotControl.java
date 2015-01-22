@@ -1,13 +1,13 @@
+import icommand.nxt.*;
+import icommand.nxt.comm.NXTCommand;
+
 /**
- * Wrapper class for abstracting the NXT icommand api which has been configured and 
- * calibrated to work with the way the robot has been setup
+ * Controller class for abstracting from NXT icommand library, configured specifically for our robot's
+ * sensors, object position and callibration
  * 
  * @author Jack Deadman
  * @author Joshua O'Leary
  */
-
-import icommand.nxt.*;
-import icommand.nxt.comm.NXTCommand;
 
 public class RobotControl {
 
@@ -54,6 +54,9 @@ public class RobotControl {
 		objectSensor = new UltrasonicSensor(U_SENSOR_PORT);
 	}
 
+	/**
+	 * Ends connection with robot
+	 */
 	public static void closeConnection() {
 		NXTCommand.close();
 	}
@@ -134,6 +137,7 @@ public class RobotControl {
 	/**
 	 * Helper method for a default beep sound
 	 * @param duration Length of beep in milliseconds
+	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
 	public static Delayer beep(int duration) {
 		beep(duration, 500);

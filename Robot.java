@@ -1,4 +1,6 @@
-/** 
+/**
+ * Main program: class containing algorithms to line up and navigate robot to spot
+ * 
  * @author Jack Deadman
  * @author Joshua O'Leary
  */
