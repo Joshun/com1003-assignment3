@@ -109,7 +109,7 @@ public class RobotControl {
 	 * @return boolean Returns true if either sensors detects black
 	 */
 	public static boolean blackDetectedEither() {
-		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) || blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
+		return blackDetectedLeft() || blackDetectedRight();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class RobotControl {
 	 * @return boolean Returns true if both sensors detects black
 	 */
 	public static boolean blackDetectedBoth() {
-		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD) && blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
+		return blackDetectedLeft() && blackDetectedRight();
 	}
 
 	/**
