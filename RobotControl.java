@@ -135,7 +135,6 @@ public class RobotControl {
 	 * @param hz int Beep frequency in hertz
 	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
 	 */
-
 	public static Delayer beep(int duration, int hz) {
 		Sound.playTone(hz, duration);
 		return new Delayer();
@@ -156,8 +155,6 @@ public class RobotControl {
 	 * @param  speed int Speed of forward movement (degrees per second)
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-
-	// Instruct robot to move forward at a given speed
 	public static Delayer goForward(int speed) {
 		MOTOR_LEFT.setSpeed(speed);
 		MOTOR_RIGHT.setSpeed(speed);
