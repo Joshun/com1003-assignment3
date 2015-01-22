@@ -5,3 +5,5 @@ doc
 diagrams
 *.sh
 *.md
+documents
+ChainTest.java
