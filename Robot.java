@@ -21,9 +21,9 @@ public class Robot {
 	 * Output to console if debug mode is on
 	 * @param message String Message to display
 	 */
-	public static void debugLog(String message) {
+	public static void debugLog(Object obj) {
 		if (debugMode) {
-			System.out.println(message);
+			System.out.println(obj);
 		}
 	}
 
