@@ -248,7 +248,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goLeftTurnOnSpot() {
-		goHardLeft(baseSpeed);
+		goLeftTurnOnSpot(baseSpeed);
 
 		return new Delayer();
 	}
@@ -272,7 +272,7 @@ public class RobotControl {
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
 	public static Delayer goRightTurnOnSpot() {
-		goHardRight(baseSpeed);
+		goRightTurnOnSpot(baseSpeed);
 
 		return new Delayer();
 	}
@@ -282,12 +282,12 @@ public class RobotControl {
 		RobotControl.initialise();
 		int delayBetweenTests = 2000;
 
-		System.out.println("Robot is turning hard right");
-		RobotControl.goHardRight();
+		System.out.println("Robot is turning right on spot");
+		RobotControl.goRightTurnOnSpot();
 		Thread.sleep(delayBetweenTests);
 
-		System.out.println("Robot is turning hard left");
-		RobotControl.goHardLeft();
+		System.out.println("Robot is turning left on spot");
+		RobotControl.goLeftTurnOnSpot();
 		Thread.sleep(delayBetweenTests);
 
 		System.out.println("Robot is turning right");
