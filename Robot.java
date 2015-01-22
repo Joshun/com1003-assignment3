@@ -172,7 +172,7 @@ public class Robot {
 		RobotControl.stop();
 
 		celebrate();
-
+		RobotControl.closeConnection();
 		debugLog("> Finished!");
 	}
 }
