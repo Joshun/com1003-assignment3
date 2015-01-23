@@ -13,7 +13,7 @@ import icommand.nxt.comm.NXTCommand;
 public class RobotControl {
 
 	// Default ratio between wheels when turning (e.g. with a factor of 2, outer wheel is 2x faster than pivot wheel)
-	private static final int DEFAULT_SPEED_FACTOR = 2;
+	private static final double DEFAULT_SPEED_FACTOR = 2.0;
 
 	// Default frequency used for beeping
 	private static final int DEFAULT_BEEP_FREQ = 500;
@@ -71,8 +71,8 @@ public class RobotControl {
 	}
 
 	/**
-	 * Get the robot's base speed for all movement
-	 * @retuns int Returns the Robot's base speed
+	 * Get the robot's base speed, used for all movement
+	 * @return int Robot's base speed
 	 */
 	public static int getBaseSpeed() {
 		return baseSpeed;
@@ -90,7 +90,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the left light sensor detects black
-	 * @return boolean Returns true if left sensor detects black
+	 * @return boolean True if left sensor detects black
 	 */
 	public static boolean blackDetectedLeft() {
 		return blackDetected(lightSensorLeft, LEFT_LIGHT_THRESHOLD);
@@ -98,7 +98,7 @@ public class RobotControl {
 
 	/**
 	 * Determines whether the right light sensor detects black
-	 * @return boolean Returns true if right sensor detects black
+	 * @return boolean True if right sensor detects black
 	 */
 	public static boolean blackDetectedRight() {
 		return blackDetected(lightSensorRight, RIGHT_LIGHT_THESHOLD);
@@ -106,7 +106,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method determining whether either sensor detects black
-	 * @return boolean Returns true if either sensors detects black
+	 * @return boolean True if either sensors detects black
 	 */
 	public static boolean blackDetectedEither() {
 		return blackDetectedLeft() || blackDetectedRight();
@@ -114,7 +114,7 @@ public class RobotControl {
 
 	/**
 	 * Helper method determining whether both sensors detects black
-	 * @return boolean Returns true if both sensors detects black
+	 * @return boolean True if both sensors detects black
 	 */
 	public static boolean blackDetectedBoth() {
 		return blackDetectedLeft() && blackDetectedRight();
@@ -123,7 +123,7 @@ public class RobotControl {
 	/**
 	 * Determines whether an obstacle is detected in a given range
 	 * @param range int Furthest distance until object is still detected (in cm)
-	 * @return boolean Returns true if obstacle is detected
+	 * @return boolean True if obstacle is detected
 	 */
 	public static boolean obstacleDetected(int range) {
 		return objectSensor.getDistance() <= range;
@@ -205,13 +205,13 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn left
-	 * @param speedFactor int Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @param speedFactor double Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goLeft(int speedFactor) {
+	public static Delayer goLeft(double speedFactor) {
 		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour		
 		if(speedFactor > 0) {
-			MOTOR_LEFT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_LEFT.setSpeed((int)(baseSpeed / speedFactor));
 			MOTOR_RIGHT.setSpeed(baseSpeed);
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
@@ -232,14 +232,14 @@ public class RobotControl {
 
 	/**
 	 * Instruct robot to turn right
-	 * @param speedFactor int Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
+	 * @param speedFactor double Ratio between the speeds of the two wheels: higher the ratio, the sharper the turn
 	 * @return Delayer Used to chain waitFor() to provide a minimum duration of movement is achieved
 	 */
-	public static Delayer goRight(int speedFactor) {
+	public static Delayer goRight(double speedFactor) {
 		// Change zero and negative values to a default, preventing unwanted / dangerous behaviour
 		if(speedFactor > 0) {
 			MOTOR_LEFT.setSpeed(baseSpeed);
-			MOTOR_RIGHT.setSpeed(baseSpeed / speedFactor);
+			MOTOR_RIGHT.setSpeed((int)(baseSpeed / speedFactor));
 			MOTOR_LEFT.forward();
 			MOTOR_RIGHT.forward();
 		}

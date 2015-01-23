@@ -31,7 +31,7 @@ public class Robot {
 
 	/**
 	 * Move robot forward until it reaches the black line. The program execution is
-	 * blocked until the robot reaches destination
+	 * blocked until the robot reaches destination)
 	 */
 	public static void navigateToStartLine() throws InterruptedException {
 		debugLog("> Moving to start line...");
@@ -48,10 +48,10 @@ public class Robot {
 		debugLog("> Lining up...");
 		// Value of '4' ensures robot turns tightly enough to move onto line correctly
 		if (START_DIRECTION == Direction.LEFT) {
-			RobotControl.goLeft(4);
+			RobotControl.goLeft(4.0);
 		}
 		else {
-			RobotControl.goRight(4);
+			RobotControl.goRight(4.0);
 		}
 		blockExecutionUntilOnLine();
 		debugLog(">> Lined up.");
@@ -117,7 +117,7 @@ public class Robot {
 
 	/**
 	 * Determines whether the robot has reached the spot (end goal) or not
-	 * @return Returns true if robot has reached spot
+	 * @return True if robot has reached spot
 	 */
 	public static boolean reachedSpot() {
 		// Need to ensure that there are no objects in range, preventing a false positive that can occur when
@@ -168,7 +168,7 @@ public class Robot {
 
 	/**
 	 * Set up program based on input from command-line flags (for debug and stopping)
-	 * @param args String Command-line arguments (passed in from main)
+	 * @param args String[] Command-line arguments (passed in from main)
 	 */
 	public static void setUpFlags(String[] args) {
 		if (args.length == 1) {

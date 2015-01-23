@@ -17,7 +17,7 @@ public class Delayer {
 	}
 
 	/**
-	 * Constructs a new delay with a default duration
+	 * Constructs a new Delayer with a default duration
 	 */
 	public Delayer() {
 		this(0);
@@ -32,7 +32,7 @@ public class Delayer {
 	}
 
 	/**
-	 * Returns duration Delayer has been set to
+	 * Returns delay duration that has been previously set
 	 * @return int Delay
 	 */
 	public int getDuration() {
@@ -40,14 +40,14 @@ public class Delayer {
 	}
 
 	/**
-	 * Used for a one-off delay
+	 * Provides a one-off delay
 	 * @param duration int Duration of delay (in milliseconds)
 	 */
 	public void waitFor(int duration) throws InterruptedException {
 		Thread.sleep(duration);
 	}
 	/**
-	 * Used to apply the duration that has been previously set
+	 * Applies the delay duration that has been previously set
 	 */
 	public void apply() throws InterruptedException {
 		Thread.sleep(duration);
