@@ -133,7 +133,8 @@ public class RobotControl {
 	 * Makes a beep sound for a given duration
 	 * @param duration int Length of beep in milliseconds
 	 * @param hz int Beep frequency in hertz
-	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
+	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded,
+	 * used for playing a sequence of notes.
 	 */
 	public static Delayer beep(int duration, int hz) {
 		Sound.playTone(hz, duration);
@@ -143,7 +144,8 @@ public class RobotControl {
 	/**
 	 * Helper method for a default beep sound
 	 * @param duration Length of beep in milliseconds
-	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded, used for playing a sequence of notes.
+	 * @return Delayer Used to chain waitFor() to prevent further program execution until beep has fully sounded,
+	 * used for playing a sequence of notes.
 	 */
 	public static Delayer beep(int duration) {
 		return beep(duration, DEFAULT_BEEP_FREQ);

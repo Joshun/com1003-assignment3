@@ -94,7 +94,9 @@ public class Robot {
 	 * @param noteLength int Duration of each note in milliseconds
 	 */
 	public static void fanfare(int noteLength) throws InterruptedException {
-		int[] beepValues = {261, 261, 261, 329, 261, 329, 261, 261, 261, 329, 261, 329, 392, 440, 392, 349, 329, 293, 261};
+		int[] beepValues = {261, 261, 261, 329, 261, 329, 261, 261, 261, 329, 261, 329, 392,
+							440, 392, 349, 329, 293, 261};
+
 		for (int beepValue : beepValues) {
 			// Beep is non-blocking so a wait is added so each note has time to be played
 			RobotControl.beep(noteLength, beepValue).waitFor(noteLength);
@@ -118,7 +120,8 @@ public class Robot {
 	 * @return Returns true if robot has reached spot
 	 */
 	public static boolean reachedSpot() {
-		// Need to ensure that there are no objects in range, preventing a false positive that can occur when turning at corners.
+		// Need to ensure that there are no objects in range, preventing a false positive that can occur when
+		// turning at corners.
 		// + 5 is used because this needs to be checked before the robot gets to the turning point
 		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE + 10);
 	}
@@ -128,7 +131,8 @@ public class Robot {
 	 */
 	public static void navigateToSpot() throws InterruptedException {
 		debugLog("> Navigating to spot...");
-		// Keep navigating to spot until both sensors detect black and no obstacles are near it. 'Near' means in range of an object as opposed to right next to it.
+		// Keep navigating to spot until both sensors detect black and no obstacles are near it. 'Near' means in range
+		// of an object as opposed to right next to it.
 		// Near is used to prevent false positive of spot being detected when turning at corners
 		while (!reachedSpot()) {
 			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
@@ -149,6 +153,9 @@ public class Robot {
 		debugLog(">> Found spot.");
 	}
 
+	/**
+	 * Determine direction of robot's first turn
+	 */
 	public static void setRandomDirection() {
 		if (Math.random() >= 0.5) {
 			START_DIRECTION = Direction.LEFT;
