@@ -46,8 +46,8 @@ public class Delayer {
 	public void waitFor(int duration) throws InterruptedException {
 		Thread.sleep(duration);
 	}
-
 	/**
+
 	 * Used to apply the duration that has been previously set
 	 */
 	public void apply() throws InterruptedException {

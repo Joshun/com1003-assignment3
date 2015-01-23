@@ -10,9 +10,11 @@ public class Robot {
 	private static final int DELAY_BETWEEN_CYCLES = 30;
 
 	// Maximum distance of object detected before robot turns
-	private static final int OBSTACLE_DETECTION_RANGE = 12;
+	private static final int OBSTACLE_DETECTION_RANGE = 14;
 
 	private static final Delayer CPU_REST = new Delayer(DELAY_BETWEEN_CYCLES);
+
+	private static Direction START_DIRECTION;
 
 	// Enables display of debug messages on console output
 	private static boolean debugMode = false;
@@ -45,7 +47,12 @@ public class Robot {
 	public static void lineUpStart() throws InterruptedException {
 		debugLog("> Lining up...");
 		// Value of '4' ensures robot turns tightly enough to move onto line correctly
-		RobotControl.goRight(4.0);
+		if (START_DIRECTION == Direction.LEFT) {
+			RobotControl.goLeft(4);
+		}
+		else {
+			RobotControl.goRight(4);
+		}
 		blockExecutionUntilOnLine();
 		debugLog(">> Lined up.");
 	}
@@ -113,7 +120,7 @@ public class Robot {
 	public static boolean reachedSpot() {
 		// Need to ensure that there are no objects in range, preventing a false positive that can occur when turning at corners.
 		// + 5 is used because this needs to be checked before the robot gets to the turning point
-		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE + 5);
+		return RobotControl.blackDetectedBoth() && !RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE + 10);
 	}
 
 	/**
@@ -126,7 +133,12 @@ public class Robot {
 		while (!reachedSpot()) {
 			if (RobotControl.obstacleDetected(OBSTACLE_DETECTION_RANGE)) {
 				debugLog(">> Detected obstacle!");
-				RobotControl.goLeftTurnOnSpot();
+				if (START_DIRECTION == Direction.RIGHT) {
+					RobotControl.goLeftTurnOnSpot();
+				}
+				else {
+					RobotControl.goRightTurnOnSpot();
+				}
 				blockExecutionUntilOnLine();
 			}
 			else {
@@ -135,6 +147,16 @@ public class Robot {
 			CPU_REST.apply();
 		}
 		debugLog(">> Found spot.");
+	}
+
+	public static void setRandomDirection() {
+		if (Math.random() >= 0.5) {
+			START_DIRECTION = Direction.LEFT;
+		}
+		else {
+			START_DIRECTION = Direction.RIGHT;
+		}
+		debugLog("> Start direction: " + START_DIRECTION);
 	}
 
 	/**
@@ -169,6 +191,8 @@ public class Robot {
 	public static void main(String[] args) throws InterruptedException {
 		RobotControl.initialise();
 		setUpFlags(args);
+
+		setRandomDirection();
 
 		// Stop robot in case already moving from running program previously
 		RobotControl.stop();
