@@ -123,7 +123,7 @@ public class RobotControl {
 	/**
 	 * Determines whether an obstacle is detected in a given range
 	 * @param range int Furthest distance until object is still detected (in cm)
-	 * @return boolean Returns true 
+	 * @return boolean Returns true if obstacle is detected
 	 */
 	public static boolean obstacleDetected(int range) {
 		return objectSensor.getDistance() <= range;
@@ -148,7 +148,6 @@ public class RobotControl {
 	public static Delayer beep(int duration) {
 		return beep(duration, DEFAULT_BEEP_FREQ);
 	}
-
 
 	/**
 	 * Instruct robot to move forward at a given speed
